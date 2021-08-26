@@ -24,7 +24,6 @@
         "phpoffice/phpword": "^0.18.2",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "santigarcor/laratrust": "^6.3",
-        "spatie/laravel-menu": "^3.7",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
