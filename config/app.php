@@ -173,6 +173,9 @@ return [
         Recca0120\Terminal\TerminalServiceProvider::class,
         Sven\ArtisanView\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Asvae\ApiTester\ServiceProvider::class,
+        PrettyRoutes\ServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -237,6 +240,5 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
     ],
 ];

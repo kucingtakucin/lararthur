@@ -46,7 +46,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAuthRoutes();
+
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -59,8 +61,15 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-            ->namespace($this->namespace)
+            ->namespace($this->namespace . '\Frontend')
             ->group(base_path('routes/web.php'));
+    }
+
+    protected function mapAuthRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/auth.php'));
     }
 
     /**
@@ -72,9 +81,53 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
+        $prefix = 'api';
+        $namespace = '\Api';
+        $middleware = 'api';
+
+        $this->_apiAuth($prefix, $middleware, $namespace);
+        $this->_apiMahasiswa($prefix, $middleware, $namespace);
+    }
+
+    private function _apiAuth($prefix, $middleware, $namespace)
+    {
+        Route::prefix($prefix . '/auth')
+            ->middleware([$middleware])
+            ->namespace($this->namespace . $namespace)
+            ->group(base_path('routes/api/auth.php'));
+    }
+
+    private function _apiMahasiswa($prefix, $middleware, $namespace)
+    {
+        Route::prefix($prefix . '/mahasiswa')
+            ->middleware([$middleware, 'auth:api'])
+            ->namespace($this->namespace . $namespace)
+            ->group(base_path('routes/api/mahasiswa.php'));
+    }
+
+    protected function mapAdminRoutes()
+    {
+        $prefix = 'backend/admin';
+        $namespace = '\Backend\Admin';
+        $middleware = ['web', 'auth:web', 'role:admin'];
+
+        $this->_adminDashboard($prefix, $middleware, $namespace);
+        $this->_adminMahasiswa($prefix, $middleware, $namespace);
+    }
+
+    private function _adminDashboard($prefix, $middleware, $namespace)
+    {
+        Route::prefix($prefix . '/dashboard')
+            ->middleware($middleware)
+            ->namespace($this->namespace . $namespace)
+            ->group(base_path('routes/admin/dashboard.php'));
+    }
+
+    private function _adminMahasiswa($prefix, $middleware, $namespace)
+    {
+        Route::prefix($prefix . '/mahasiswa')
+            ->middleware($middleware)
+            ->namespace($this->namespace . $namespace)
+            ->group(base_path('routes/admin/mahasiswa.php'));
     }
 }

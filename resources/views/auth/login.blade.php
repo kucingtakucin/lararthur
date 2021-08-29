@@ -1,73 +1,152 @@
-@extends('layouts.app')
+@extends('layouts.auth.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <div class="login-card">
+        <div>
+            <div><a class="logo text-left" href="{{ route('frontend.home.index') }}"><img class="img-fluid for-light"
+                        src="https://appt.demoo.id/tema/cuba/html/assets/images/logo/login.png" alt="looginpage"><img
+                        class="img-fluid for-dark"
+                        src="https://appt.demoo.id/tema/cuba/html/assets/images/logo/logo_dark.png" alt="looginpage"></a>
+            </div>
+            <div class="login-main">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                <form class="theme-form needs-validation" novalidate id="form-login" method="post">
+                    <h4>Login</h4>
+                    <p>Enter your username & password to login</p>
+                    <div class="form-group">
+                        <label class="col-form-label" for="name">Username</label>
+                        <input class="form-control" required id="name" name="name" type="text">
+                        {!! validation_feedback('username', 'wajib diisi') !!}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label" for="password">Password</label>
+                        <input class="form-control" required type="password" id="password" name="password">
+                        <div class="show-hide"><span class="show"> </span></div>
+                        {!! validation_feedback('password', 'wajib diisi') !!}
+                    </div>
+                    <div class="form-group">
+                        {!! NoCaptcha::display() !!}
+                    </div>
+                    <div class="form-group mb-0">
+                        <div class="checkbox p-0">
+                            <input id="remember" type="checkbox" name="remember">
+                            <label class="text-muted" for="remember">Remember me</label>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                    </div>
+                    @if (Route::has('register'))
+                        <p class="mt-4 mb-0">Don't have account?<a class="ml-2" href="{{ route('register') }}">Create
+                                Account</a></p>
+                    @endif
+                </form>
             </div>
         </div>
     </div>
-</div>
 @endsection
+
+@push('scripts')
+    <script>
+        let login;
+
+        // Document ready
+        $(() => {
+
+            /**
+             * Keperluan disable inspect element
+             */
+            // ================================================== //
+            // Disable right click
+            $(document).contextmenu(function(event) {
+                event.preventDefault()
+            })
+
+            $(document).keydown(function(event) {
+                // Disable F12
+                if (event.keyCode == 123) return false;
+
+                // Disable Ctrl + Shift + I
+                if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
+                    return false;
+                }
+
+                // Disable Ctrl + Shift + J
+                if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
+                    return false;
+                }
+
+                // Disable Ctrl + U
+                if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
+                    return false;
+                }
+            })
+
+            /**
+             * Keperluan login
+             */
+            // ================================================== //
+
+            login = (form) => {
+                if (!grecaptcha.getResponse()) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        html: "Recaptcha wajib dicentang!",
+                    })
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Loading...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                })
+
+                let formData = new FormData(form);
+
+                axios.post("{{ route('login') }}", formData)
+                    .then(res => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: res.data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                        setTimeout(() => {
+                            location.replace(res.data.redirect)
+                        }, 1000);
+                    }).catch(err => {
+                        console.error(err);
+                        let errors = '';
+                        Object.entries(err.response.data.errors)
+                            .forEach(function([key, value]) {
+                                value.map(item => {
+                                    errors +=
+                                        `<i><i class="fa fa-angle-right"></i> ${value}</i> <br>`
+                                })
+                            })
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: err.response.data.message,
+                            html: errors,
+                        })
+                    }).then(() => {
+                        $('#form-login').removeClass('was-validated')
+                    })
+            }
+
+            $('#form-login').submit(function(event) {
+                event.preventDefault()
+                if (this.checkValidity()) {
+                    login(this);
+                }
+            })
+        })
+    </script>
+@endpush

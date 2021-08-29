@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Frontend\Home\HomeController@index')->name('frontend.home.index');
-
+Route::get('/', 'Home\HomeController@index')->name('frontend.home.index');
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-
-Auth::routes();
+Route::get('/img/{path}', 'ImageController@show')->where('path', '.*');

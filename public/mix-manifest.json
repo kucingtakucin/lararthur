@@ -1,0 +1,8 @@
+{
+    "/assets/auth/js/app.js": "/assets/auth/js/app.js",
+    "/assets/backend/js/app.js": "/assets/backend/js/app.js",
+    "/assets/frontend/js/app.js": "/assets/frontend/js/app.js",
+    "/assets/frontend/css/app.css": "/assets/frontend/css/app.css",
+    "/assets/backend/css/app.css": "/assets/backend/css/app.css",
+    "/assets/auth/css/app.css": "/assets/auth/css/app.css"
+}

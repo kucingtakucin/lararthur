@@ -15,6 +15,7 @@
         "dompdf/dompdf": "^1.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "garygreen/pretty-routes": "^1.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
         "laravel/framework": "^7.29",
         "laravel/telescope": "^3.5",
@@ -25,6 +26,7 @@
         "phpoffice/phpword": "^0.18.2",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "santigarcor/laratrust": "^6.3",
+        "tymon/jwt-auth": "^1.0",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
@@ -54,6 +56,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/Helpers/MyHelpers.php"
         ]
     },
     "autoload-dev": {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,13 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // return redirect(RouteServiceProvider::HOME);
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            if (User::find(Auth::id())->hasRole('admin')) {
+                return redirect()->route('backend.admin.dashboard.index');
+            } else if (User::find(Auth::id())->hasRole('member')) {
+                // 
+            }
         }
 
         return $next($request);
