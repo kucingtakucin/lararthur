@@ -12,7 +12,9 @@ Route::get('/getGeoJson', 'MahasiswaController@getGeoJSON')->name('backend.admin
 Route::get('/exportWord', 'MahasiswaController@exportWord')->name('backend.admin.mahasiswa.export_word');
 Route::get('/exportExcel', 'MahasiswaController@exportExcel')->name('backend.admin.mahasiswa.export_excel');
 Route::get('/exportPdf', 'MahasiswaController@exportPdf')->name('backend.admin.mahasiswa.export_pdf');
+Route::get('/downloadTemplateExcel', 'MahasiswaController@downloadTemplateExcel')->name('backend.admin.mahasiswa.download_template_excel');
 Route::post('/insert', 'MahasiswaController@insert')->name('backend.admin.mahasiswa.insert');
 Route::post('/upload', 'MahasiswaController@upload')->name('backend.admin.mahasiswa.upload');
+Route::post('/importExcel', 'MahasiswaController@importExcel')->name('backend.admin.mahasiswa.import_excel');
 Route::put('/update', 'MahasiswaController@update')->name('backend.admin.mahasiswa.update');
 Route::delete('/delete', 'MahasiswaController@delete')->name('backend.admin.mahasiswa.delete');

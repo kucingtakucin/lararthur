@@ -29,8 +29,9 @@
     })
 
     let datatable, id_data, $get, status_crud = false,
-        $insert, $update, $delete, map, map_modal,
+        $insert, $update, $delete, $import, map, map_modal,
         marker_modal, legend;
+
     // Document ready
     $(() => {
         /**
@@ -89,9 +90,7 @@
                                     }
                                 },
                                 mouseout: (event) => {
-                                    geojson.resetStyle(
-                                        event
-                                        .target)
+                                    geojson.resetStyle(event.target)
                                 },
                                 click: (event) => {
                                     map.fitBounds(event
@@ -108,18 +107,20 @@
                 .then(res => {
                     let results = res.data.data
                     results.map(item => {
-                        L.marker([item.latitude, item.longitude])
-                            .addTo(map)
-                            .bindPopup(
-                                new L.Popup({
-                                    autoClose: false,
-                                    closeOnClick: false
-                                })
-                                .setContent(`<b>${item.nama}</b>`)
-                                .setLatLng([item.latitude, item
-                                    .longitude
-                                ])
-                            ).openPopup();
+                        if (item.latitude && item.longitude) {
+                            L.marker([item.latitude, item.longitude])
+                                .addTo(map)
+                                .bindPopup(
+                                    new L.Popup({
+                                        autoClose: false,
+                                        closeOnClick: false
+                                    })
+                                    .setContent(`<b>${item.nama}</b>`)
+                                    .setLatLng([item.latitude, item
+                                        .longitude
+                                    ])
+                                ).openPopup();
+                        }
                     })
                 })
 
@@ -127,31 +128,33 @@
                 .then(res => {
                     let results = res.data.data
                     results.map(item => {
-                        L.marker([item.latitude, item.longitude], {
-                                icon: L.icon({
-                                    iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/678111-map-marker-512.png',
-                                    iconSize: [40,
-                                        40
-                                    ], // size of the icon
-                                    iconAnchor: [
-                                        20, 40
-                                    ], // point of the icon which will correspond to marker's location
-                                    popupAnchor: [
-                                        0, -30
-                                    ] // point from which the popup should open relative to the iconAnchor
+                        if (item.latitude && item.longitude) {
+                            L.marker([item.latitude, item.longitude], {
+                                    icon: L.icon({
+                                        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/678111-map-marker-512.png',
+                                        iconSize: [40,
+                                            40
+                                        ], // size of the icon
+                                        iconAnchor: [
+                                            20, 40
+                                        ], // point of the icon which will correspond to marker's location
+                                        popupAnchor: [
+                                            0, -30
+                                        ] // point from which the popup should open relative to the iconAnchor
+                                    })
                                 })
-                            })
-                            .addTo(map)
-                            .bindPopup(
-                                new L.Popup({
-                                    autoClose: false,
-                                    closeOnClick: false
-                                })
-                                .setContent(`<b>${item.nama}</b>`)
-                                .setLatLng([item.latitude, item
-                                    .longitude
-                                ])
-                            ).openPopup();
+                                .addTo(map)
+                                .bindPopup(
+                                    new L.Popup({
+                                        autoClose: false,
+                                        closeOnClick: false
+                                    })
+                                    .setContent(`<b>${item.nama}</b>`)
+                                    .setLatLng([item.latitude, item
+                                        .longitude
+                                    ])
+                                ).openPopup();
+                        }
                     })
                 })
         }
@@ -252,6 +255,15 @@
                         action: (e, dt, node, config) => {
                             location.replace(
                                 "{{ route('backend.admin.mahasiswa.export_excel') }}");
+                        }
+                    },
+                    {
+                        className: 'btn btn-success m-2',
+                        text: $('<i>', {
+                            class: 'fa fa-upload'
+                        }).prop('outerHTML') + ' Import XLSX', // Import XLSX
+                        action: (e, dt, node, config) => {
+                            $('#modal_import').modal('show')
                         }
                     },
                     {
@@ -601,6 +613,8 @@
         // Get Data 
         $get = (element) => {
             let row = datatable.row($(element).closest('tr')).data()
+            console.log(row)
+
             $('#modal_ubah').modal('show');
             $('#form_ubah input#ubah_id[name=id]').val(row.id)
             $('#form_ubah input#ubah_nim[name=nim]').val(row.nim);
@@ -610,7 +624,7 @@
             $('#form_ubah input#ubah_longitude[name=longitude]').val(row.longitude);
 
             $('#form_ubah select#ubah_select_fakultas.select_fakultas')
-                .append(new Option(row.fakultas, row.fakultas_id, true, true))
+                .append(new Option(row.fakultas.nama, row.fakultas_id, true, true))
                 .trigger('change')
                 .trigger({
                     type: 'select2:select',
@@ -624,7 +638,7 @@
                 })
 
             $('#form_ubah select#ubah_select_prodi.select_prodi')
-                .append(new Option(row.prodi, row.prodi_id, true, true))
+                .append(new Option(row.prodi.nama, row.prodi_id, true, true))
                 .trigger('change')
                 .trigger({
                     type: 'select2:select',
@@ -771,6 +785,7 @@
                     })
                 }).catch(err => {
                     console.log(err)
+
                     if (err.response.data.errors) {
                         let errors = '';
                         Object.entries(err.response.data.errors)
@@ -792,6 +807,7 @@
                             html: err.response.statusText,
                         })
                     }
+
                 }).then(() => {
                     $('#form_ubah button[type=submit]').show();
                     $('#form_ubah button.loader').hide();
@@ -840,16 +856,66 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            datatable.ajax.reload();
                         }).catch(err => {
                             console.error(err);
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
-                                text: err.response.statusText,
+                                text: err.response.statusText
+                            })
+                        }).then(() => {
+                            datatable.ajax.reload()
+                        })
+                }
+            })
+        }
+
+        $import = (form) => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Document will be imported!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, import it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Loading...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    })
+
+                    let formData = new FormData(form);
+                    axios.post("{{ route('backend.admin.mahasiswa.import_excel') }}", formData)
+                        .then(res => {
+                            status_crud = true
+                            initMap()
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: res.data.message,
                                 showConfirmButton: false,
                                 timer: 1500
                             })
+                        }).catch(err => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: err.response.data.message,
+                            })
+                        }).then(() => {
+                            $('#form_import button[type=submit]').show();
+                            $('#form_import button.loader').hide();
+                            $('#form_import').trigger('reset');
+                            $('#form_import').removeClass('was-validated')
+                            $('#modal_import').modal('hide');
+                            datatable.ajax.reload();
                         })
                 }
             })
@@ -873,6 +939,17 @@
                 $update(this);
             }
         });
+
+        $('#form_import').submit(function(event) {
+            event.preventDefault()
+            if (this.checkValidity()) {
+                $import(this)
+            }
+        })
+
+        $('#form_import #downloadTemplateExcel').click(() => {
+            location.replace("{{ route('backend.admin.mahasiswa.download_template_excel') }}")
+        })
 
         $('#modal_tambah').on('hide.bs.modal', () => {
             $('#form_tambah').removeClass('was-validated')

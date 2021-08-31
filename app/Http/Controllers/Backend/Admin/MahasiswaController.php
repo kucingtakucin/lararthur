@@ -239,8 +239,62 @@ class MahasiswaController extends Controller
         $templateProcessor->saveAs('php://output');
     }
 
-    public function importExcel()
+    /**
+     * Keperluan import xlsx
+     * 
+     * @param Request $request
+     * @return void
+     */
+    public function importExcel(Request $request)
     {
+        if ($request->hasFile('import_file_excel')) {
+            $spreadsheet = IOFactory::load($request->file('import_file_excel')->getRealPath());
+            $data = $spreadsheet->getActiveSheet()->toArray();
+
+            if (
+                !($data[3][1] === 'NO' && $data[3][2] === 'NIM' && $data[3][3] === 'NAMA LENGKAP' && $data[3][4] === 'ANGKATAN'
+                    && $data[3][5] === 'PROGRAM STUDI' && $data[3][6] === 'FAKULTAS' && $data[3][7] === 'LATITUDE' && $data[3][8] === 'LONGITUDE')
+            ) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Format tidak sesuai, mohon gunakan format dari template!'
+                ], 404);
+            }
+
+            for ($i = 4; $i < count($data); $i++) {
+                if (
+                    $data[$i][1] && $data[$i][1] !== 'NO' && $data[$i][2] && $data[$i][2] !== 'NIM'
+                    && $data[$i][3] !== 'NAMA LENGKAP' && $data[$i][4] !== 'ANGKATAN' && $data[$i][5] !== 'PROGRAM STUDI'
+                    && $data[$i][6] !== 'FAKULTAS' && $data[$i][7] !== 'LATITUDE' && $data[$i][8] !== 'LONGITUDE'
+                ) {
+                    $mahasiswa = new Mahasiswa();
+                    $mahasiswa->nim = $data[$i][2] ?? null;
+                    $mahasiswa->nama = $data[$i][3] ?? null;
+                    $mahasiswa->angkatan = $data[$i][4] ?? null;
+                    $mahasiswa->prodi_id = RefProdi::where('nama', strtoupper($data[$i][5]))->first()->id ?? null;
+                    $mahasiswa->fakultas_id = RefFakultas::where('nama', strtoupper($data[$i][6]))->first()->id ?? null;
+                    $mahasiswa->latitude = $data[$i][7] ?? null;
+                    $mahasiswa->longitude = $data[$i][8] ?? null;
+                    $mahasiswa->created_by = Auth::id();
+                    $mahasiswa->save();
+                }
+            }
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil melakukan import'
+            ]);
+        }
+    }
+
+    public function downloadTemplateExcel()
+    {
+        $spreadsheet = IOFactory::load(storage_path('app/public/templates/excel/template_daftar_mahasiswa.xlsx'));
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="template_daftar_mahasiswa.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
     }
 
     /**
@@ -323,7 +377,7 @@ class MahasiswaController extends Controller
                 ->setColor(new Color('000000'));
         }
 
-        $data = $this->M_Mahasiswa->get();
+        $data = Mahasiswa::all();
 
         $no = 0;
         $awal = 6;
@@ -353,6 +407,7 @@ class MahasiswaController extends Controller
         $writer->save(
             'php://output'
         );
+        exit;
     }
 
     /**

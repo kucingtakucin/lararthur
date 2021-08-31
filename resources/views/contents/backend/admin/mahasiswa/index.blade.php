@@ -82,6 +82,7 @@
     <!-- Modal -->
     @include('contents.backend.admin.mahasiswa.modal.tambah')
     @include('contents.backend.admin.mahasiswa.modal.ubah')
+    @include('contents.backend.admin.mahasiswa.modal.import')
 @endsection
 
 @push('scripts')
