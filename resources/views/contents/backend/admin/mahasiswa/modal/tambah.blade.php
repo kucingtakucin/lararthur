@@ -4,8 +4,8 @@
             <form class="needs-validation" id="form_tambah" method="post" enctype="multipart/form-data" novalidate>
                 <div class="modal-header">
                     <h5 class="modal-title">Form Tambah Data</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title=""
-                        title=""><span aria-hidden="true">×</span></button>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"
+                        data-original-title="" title=""><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -30,8 +30,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-12" for="angkatan">Angkatan</label>
-                                <input type="number" id="tambah_angkatan" class="form-control" name="angkatan" required
-                                    autocomplete="off" placeholder="Masukkan Angkatan">
+                                <input type="number" id="tambah_angkatan" class="form-control" name="angkatan"
+                                    required autocomplete="off" placeholder="Masukkan Angkatan">
                                 {!! validation_feedback('angkatan', 'wajib diisi dan harus angka') !!}
                             </div>
                         </div>
@@ -83,15 +83,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-12" for="longitude">Longitude</label>
-                                <input type="text" id="tambah_longitude" class="form-control" name="longitude" required
-                                    autocomplete="off" placeholder="Masukkan Longitude">
+                                <input type="text" id="tambah_longitude" class="form-control" name="longitude"
+                                    required autocomplete="off" placeholder="Masukkan Longitude">
                                 {!! validation_feedback('longitude', 'wajib diisi') !!}
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12" style="height: 50vh;">
-                            <div id="map-tambah" style="width: 100%; height: 100%; z-index: 0;"></div>
+                        <div class="col-md-12 map-modal-container">
+                            <div id="map-tambah"></div>
                         </div>
                     </div>
                 </div>

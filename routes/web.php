@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Home\HomeController@index')->name('frontend.home.index');
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-Route::get('/img/{path}', 'ImageController@show')->where('path', '.*');
+Route::get('/img/{path}', '\App\Http\Controllers\ImageController@show')->where('path', '.*');

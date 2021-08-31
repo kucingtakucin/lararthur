@@ -35,7 +35,8 @@
                         <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                     </div>
                     @if (Route::has('register'))
-                        <p class="mt-4 mb-0">Don't have account?<a class="ml-2" href="{{ route('register') }}">Create
+                        <p class="mt-4 mb-0">Don't have account?<a class="ml-2"
+                                href="{{ route('register') }}">Create
                                 Account</a></p>
                     @endif
                 </form>
@@ -114,7 +115,7 @@
                             title: 'Success!',
                             text: res.data.message,
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2000
                         })
 
                         setTimeout(() => {
