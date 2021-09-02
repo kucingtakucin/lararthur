@@ -613,7 +613,6 @@
         // Get Data 
         $get = (element) => {
             let row = datatable.row($(element).closest('tr')).data()
-            console.log(row)
 
             $('#modal_ubah').modal('show');
             $('#form_ubah input#ubah_id[name=id]').val(row.id)
@@ -679,10 +678,10 @@
                 }
             })
 
+            status_crud = true
             let formData = new FormData(form);
             axios.post("{{ route('backend.admin.mahasiswa.insert') }}", formData)
                 .then(res => {
-                    status_crud = true
                     initMap()
 
                     // Upload File
@@ -752,11 +751,11 @@
                 }
             })
 
+            status_crud = true
             let formData = new FormData(form);
             formData.append('_method', 'PUT')
             axios.post("{{ route('backend.admin.mahasiswa.update') }}", formData)
                 .then(res => {
-                    status_crud = true
                     initMap()
 
                     // Upload File

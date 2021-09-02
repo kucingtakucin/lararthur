@@ -36,16 +36,26 @@
             <h6>Manajemen</h6>
         </div>
     </li>
-    <li class="sidebar-list"><a class="nav-link sidebar-title sidebar-link"
-            href="{{ route('laratrust.roles.index') }}"><i data-feather="filter"></i><span>Roles</span></a>
+    <li class="sidebar-list">
+        <a class="nav-link sidebar-title sidebar-link {{ request()->is('*roles*') ? __('active') : '' }}"
+            href="{{ route('backend.admin.roles.index') }}">
+            <i data-feather="filter"></i><span>Roles</span>
+        </a>
     </li>
-    <li class="sidebar-list"><a class="nav-link sidebar-title sidebar-link"
-            href="{{ route('laratrust.permissions.index') }}"><i data-feather="lock"></i><span>Permissions</span></a>
+    <li class="sidebar-list">
+        <a class="nav-link sidebar-title sidebar-link {{ request()->is('*permissions*') ? __('active') : '' }}"
+            href="{{ route('backend.admin.permissions.index') }}">
+            <i data-feather="lock"></i><span>Permissions</span>
+        </a>
     </li>
-    <li class="sidebar-list"><a class="nav-link sidebar-title sidebar-link"
-            href="{{ route('laratrust.roles-assignment.index') }}"><i data-feather="users"></i><span>User</span></a>
+    <li class="sidebar-list">
+        <a class="nav-link sidebar-title sidebar-link {{ request()->is('*user*') ? __('active') : '' }}"
+            href="{{ route('backend.admin.user.index') }}">
+            <i data-feather="users"></i><span>User</span>
+        </a>
     </li>
 @endif
+
 <!-- Sidebar ... -->
 @if (User::find(auth()->id())->hasRole('member'))
 
