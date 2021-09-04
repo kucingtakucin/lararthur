@@ -21,9 +21,9 @@ class RedirectIfAuthenticated
     {
         // return redirect(RouteServiceProvider::HOME);
         if (Auth::guard($guard)->check()) {
-            if (User::find(Auth::id())->hasRole('admin')) {
+            if (User::find(Auth::guard($guard)->id())->hasRole('admin')) {
                 return redirect()->route('backend.admin.dashboard.index');
-            } else if (User::find(Auth::id())->hasRole('member')) {
+            } else if (User::find(Auth::guard($guard)->id())->hasRole('member')) {
                 // 
             }
         }
