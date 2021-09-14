@@ -134,7 +134,7 @@
                                 </div>
                             </div>
                             <ul class="profile-dropdown onhover-show-div">
-                                <li><i data-feather="user"></i><span>Account </span></li>
+                                <li id="edit-account"><i data-feather="user"></i><span>Account </span></li>
                                 <li>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();
                                         ">
