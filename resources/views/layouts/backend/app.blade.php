@@ -126,8 +126,8 @@
                                         @php use App\Models\User; @endphp
                                         @if (User::find(auth('web')->id())->hasRole('admin'))
                                             {{ __('Admin') }}
-                                        @elseif (User::find(auth('web')->id())->hasRole('member'))
-                                            {{ __('Member') }}
+                                        @elseif (User::find(auth('web')->id())->hasRole('operator'))
+                                            {{ __('Operator') }}
                                         @endif
                                         <i class="middle fa fa-angle-down"></i>
                                     </p>
