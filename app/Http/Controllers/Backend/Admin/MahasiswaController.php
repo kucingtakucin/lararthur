@@ -151,7 +151,7 @@ class MahasiswaController extends Controller
         $this->validator($request->all())->validate();
         $mahasiswa = new Mahasiswa();
         $mahasiswa->fill($request->all());
-        $mahasiswa->created_by = Auth::id();
+        $mahasiswa->created_by = auth('web')->id();
         $mahasiswa->save();
         return response()->json([
             'status' => true,
@@ -171,7 +171,7 @@ class MahasiswaController extends Controller
         $this->validator($request->all())->validate();
         $mahasiswa = Mahasiswa::find($request->id);
         $mahasiswa->fill($request->all());
-        $mahasiswa->updated_by = Auth::id();
+        $mahasiswa->updated_by = auth('web')->id();
         $mahasiswa->save();
         return response()->json([
             'status' => true,
@@ -214,7 +214,7 @@ class MahasiswaController extends Controller
         if ($mahasiswa->foto && file_exists(storage_path('app/public/' . $mahasiswa->foto))) {
             unlink(storage_path('app/public/' . $mahasiswa->foto));
         }
-        $mahasiswa->deleted_by = Auth::id();
+        $mahasiswa->deleted_by = auth('web')->id();
         $mahasiswa->save();
         $mahasiswa->delete();
         return response()->json([
@@ -247,7 +247,15 @@ class MahasiswaController extends Controller
      */
     public function importExcel(Request $request)
     {
-        if ($request->hasFile('import_file_excel')) {
+        if ($request->hasFile('import_file_excel') && is_uploaded_file($_FILES['import_file_excel']['tmp_name'])) {
+            if (!in_array(mime_content_type($_FILES['import_file_excel']['tmp_name']), ['application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Ekstensi file tidak sesuai! Wajib <b>.xlsx</b>',
+                    'mimetype' => mime_content_type($_FILES['import_file_excel']['tmp_name'])
+                ], 404);
+            }
+
             $spreadsheet = IOFactory::load($request->file('import_file_excel')->getRealPath());
             $data = $spreadsheet->getActiveSheet()->toArray();
 
@@ -275,7 +283,7 @@ class MahasiswaController extends Controller
                     $mahasiswa->fakultas_id = RefFakultas::where('nama', strtoupper($data[$i][6]))->first()->id ?? null;
                     $mahasiswa->latitude = $data[$i][7] ?? null;
                     $mahasiswa->longitude = $data[$i][8] ?? null;
-                    $mahasiswa->created_by = Auth::id();
+                    $mahasiswa->created_by = auth('web')->id();
                     $mahasiswa->save();
                 }
             }

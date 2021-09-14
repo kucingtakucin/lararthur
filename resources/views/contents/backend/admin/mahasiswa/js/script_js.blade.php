@@ -22,6 +22,7 @@
                     }),
                 ]
             })
+            map.scrollWheelZoom.disable();
 
             /** Legend */
             legend = L.control({
@@ -35,7 +36,6 @@
             }
 
             legend.addTo(map)
-
             /** GeoJSON Features */
             $.getJSON("{{ route('backend.admin.mahasiswa.get_geojson') }}",
                 response => {
@@ -149,6 +149,7 @@
                 map_modal.invalidateSize()
             }, 500);
 
+            map_modal.scrollWheelZoom.disable();
             map_modal.on('click', (event) => {
                 if (marker_modal) map_modal.removeLayer(marker_modal)
                 marker_modal = L.marker([event.latlng.lat, event.latlng
@@ -270,8 +271,10 @@
                     if (status_crud) {
                         status_crud = false
                     }
-                    Swal.hideLoading()
-                    Swal.close()
+                    setTimeout(async () => {
+                        await Swal.hideLoading()
+                        await Swal.close()
+                    },10);
                 }
             },
             columnDefs: [{
@@ -794,6 +797,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
+                            datatable.ajax.reload()
                         }).catch(err => {
                             console.error(err);
                             Swal.fire({
@@ -801,8 +805,6 @@
                                 title: 'Oops...',
                                 text: err.response.statusText
                             })
-                        }).then(() => {
-                            datatable.ajax.reload()
                         })
                 }
             })
@@ -834,6 +836,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
+                            datatable.ajax.reload();
                         }).catch(err => {
                             Swal.fire({
                                 icon: 'error',
@@ -846,7 +849,6 @@
                             $('#form_import').trigger('reset');
                             $('#form_import').removeClass('was-validated')
                             $('#modal_import').modal('hide');
-                            datatable.ajax.reload();
                         })
                 }
             })
