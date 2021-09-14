@@ -44,9 +44,9 @@
                                 <tr>
                                     <td>
                                         @if(in_array($item->id, $role_ids))
-                                            <input type="checkbox" name="role_{{ $item->name }}" checked>
+                                            <input type="checkbox" class="check-role" name="role_{{ $item->name }}" checked>
                                         @else
-                                            <input type="checkbox" name="role_{{ $item->name }}">
+                                            <input type="checkbox" class="check-role" name="role_{{ $item->name }}">
                                         @endif
                                     </td>
                                     <td>{{ $item->name }}</td>
@@ -65,3 +65,13 @@
         </div>
     </form>
 @endsection
+
+@push('scripts')
+    <script>
+        $(() => {
+            $('.check-role').click(function () {
+                $('.check-role').not(this).prop('checked', false)
+            })
+        })
+    </script>
+@endpush

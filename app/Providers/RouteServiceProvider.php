@@ -49,6 +49,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAuthRoutes();
 
         $this->mapAdminRoutes();
+
+        $this->mapOperatorRoutes();
     }
 
     /**
@@ -65,6 +67,11 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 
+    /**
+     * Define the "auth" routes for the application.
+     *
+     * @return void
+     */
     protected function mapAuthRoutes()
     {
         Route::middleware('web')
@@ -74,8 +81,6 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
      *
      * @return void
      */
@@ -105,6 +110,11 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/api/mahasiswa.php'));
     }
 
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * @return void
+     */
     protected function mapAdminRoutes()
     {
         $prefix = 'backend/admin';
@@ -138,5 +148,27 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware($middleware)
             ->namespace($this->namespace . $namespace)
             ->group(base_path('routes/admin/account.php'));
+    }
+
+    /**
+     * Define the "operator" routes for the application.
+     *
+     * @return void
+     */
+    protected function mapOperatorRoutes()
+    {
+        $prefix = 'backend/operator';
+        $namespace = '\Backend\Operator';
+        $middleware = ['web', 'auth:web', 'role:operator'];
+
+        $this->_operatorDashboard($prefix, $middleware, $namespace);
+    }
+
+    private function _operatorDashboard($prefix, $middleware, $namespace)
+    {
+        Route::prefix($prefix . '/dashboard')
+            ->middleware($middleware)
+            ->namespace($this->namespace . $namespace)
+            ->group(base_path('routes/operator/dashboard.php'));
     }
 }

@@ -46,8 +46,8 @@ class LoginController extends Controller
     {
         if (User::find(auth('web')->id())->hasRole('admin')) {
             return route('backend.admin.dashboard.index');
-        } elseif (User::find(auth('web')->id())->hasRole('member')) {
-            // return route('backend.member.dashboard');
+        } elseif (User::find(auth('web')->id())->hasRole('operator')) {
+            return route('backend.operator.dashboard.index');
         }
     }
 
