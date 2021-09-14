@@ -13,7 +13,7 @@ class AccountController extends Controller
     {
         $this->validator()->validate();
         $user = User::find($request->id);
-        $user->fill($request->all());
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return response()->json([
@@ -31,7 +31,7 @@ class AccountController extends Controller
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
-            'username' => ['required'],
+            // 'username' => ['required'],
             'password' => ['required'],
         ]);
     }
