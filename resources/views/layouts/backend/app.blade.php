@@ -121,12 +121,12 @@
                                     src="https://appt.demoo.id/tema/cuba/html/assets/images/dashboard/profile.jpg"
                                     alt="profile">
                                 <div class="media-body">
-                                    <span>{{ auth()->user()->name }}</span>
+                                    <span>{{ auth('web')->user()->name }}</span>
                                     <p class="mb-0 font-roboto">
                                         @php use App\Models\User; @endphp
-                                        @if (User::find(auth()->id())->hasRole('admin'))
+                                        @if (User::find(auth('web')->id())->hasRole('admin'))
                                             {{ __('Admin') }}
-                                        @elseif (User::find(auth()->id())->hasRole('member'))
+                                        @elseif (User::find(auth('web')->id())->hasRole('member'))
                                             {{ __('Member') }}
                                         @endif
                                         <i class="middle fa fa-angle-down"></i>
@@ -201,6 +201,50 @@
                     </div>
                 </div>
                 <!-- Container-fluid Ends-->
+
+                <div class="modal fade" id="modal_account" role="dialog" aria-labelledby="modal-popin" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form class="needs-validation" id="form_account" method="post" enctype="multipart/form-data" novalidate>
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Account</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-md-12" for="username">Username</label>
+                                                <input type="text" id="ubah_username" class="form-control" name="username" value="<?= user()->username ?>" readonly required autocomplete="off" placeholder="Masukkan Username">
+                                                <?= validation_feedback("username", "wajib diisi") ?>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-md-12" for="password">Password</label>
+                                                <input type="password" id="ubah_password" class="form-control" name="password" minlength="8" required autocomplete="off" placeholder="Masukkan Password">
+                                                <?= validation_feedback("password", "wajib diisi dan minimal 8 karakter") ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="id" id="id" value="<?= user()->id ?>">
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">Close</button>
+                                    <button class="btn btn-primary" type="submit" data-original-title="" title="">Submit Data</button>
+                                    <button class="btn btn-primary loader" type="button" disabled style="display: none;">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Loading...
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Pop In Modal -->
             </div>
 
             @include('layouts.backend.footer')
@@ -265,11 +309,135 @@
     <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
+    <!-- Pusher -->
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
     <!-- Custom Javascripts -->
     <script src="{{ asset('assets/backend/js/app.js') }}"></script>
-    <script>
+ <script>
+        let csrf, loading, $edit_account, pusher, channel;
         $(document).ready(function() {
+
+            /**
+            * Keperluan pusher pengaduan
+            */
+            // ================================================== //
+            
+
+            /**
+            * Keperluan show preloader
+            */
+            // ================================================== //
             $('.preloader-container').fadeOut(500)
+
+            /**
+            * Keperluan resize Google Recaptchaa
+            */
+            // ================================================== //
+            
+            let width = $('.g-recaptcha').parent().width();
+            if (width < 302) {
+                let scale = width / 302;
+                $('.g-recaptcha').css('transform', 'scale(' + scale + ')');
+                $('.g-recaptcha').css('-webkit-transform', 'scale(' + scale + ')');
+                $('.g-recaptcha').css('transform-origin', '0 0');
+                $('.g-recaptcha').css('-webkit-transform-origin', '0 0');
+            }
+
+            /**
+            * Keperluan disable inspect element
+            */
+            // ================================================== //
+            
+            // Disable right click
+            $(document).contextmenu(function(event) {
+                event.preventDefault()
+            })
+
+            $(document).keydown(function(event) {
+                // Disable F12
+                if (event.keyCode == 123) return false;
+
+                // Disable Ctrl + Shift + I
+                if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
+                    return false;
+                }
+
+                // Disable Ctrl + Shift + J
+                if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
+                    return false;
+                }
+
+                // Disable Ctrl + U
+                if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
+                    return false;
+                }
+            })
+
+            /**
+            * Keperluan show loading
+            */
+            // ================================================== //
+            loading = () => {
+                Swal.fire({
+                    title: 'Loading...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                })
+            }
+
+
+            /**
+            * Keperluan edit account
+            */
+            // ================================================== //
+            $('#edit-account').click(function () {
+                $('#modal_account').modal('show')
+            })
+
+            $('#form_account').submit(function(event) {
+                event.preventDefault();
+                if (this.checkValidity()) {
+                    $edit_account(this);
+                }
+            });
+
+             $('#modal_account').on('hide.bs.modal', () => {
+                $('#form_account').removeClass('was-validated')
+                $('#form_account').trigger('reset')
+            })
+
+            $edit_account = async (form) => {
+                let formData = new FormData(form)
+
+                axios.post("auth/edit_account", formData)
+                    .then(res => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: res.data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }).catch(err => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: err.response.data.message,
+                            // text: err.response.statusText,
+                        })
+                    }).then(() => {
+                        $('#form_account button[type=submit]').show();
+                        $('#form_account button.loader').hide();
+                        $('#form_account').trigger('reset');
+                        $('#form_account').removeClass('was-validated')
+                        $('#modal_account').modal('hide');
+                    })
+            }
         })
     </script>
     @stack('scripts')

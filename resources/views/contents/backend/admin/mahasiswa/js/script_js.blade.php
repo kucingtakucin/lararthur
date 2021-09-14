@@ -1,33 +1,4 @@
 <script>
-    /**
-     * Keperluan disable inspect element
-     */
-    // ================================================== //
-    // Disable right click
-    $(document).contextmenu(function(event) {
-        event.preventDefault()
-    })
-
-    $(document).keydown(function(event) {
-        // Disable F12
-        if (event.keyCode == 123) return false;
-
-        // Disable Ctrl + Shift + I
-        if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
-            return false;
-        }
-
-        // Disable Ctrl + Shift + J
-        if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
-            return false;
-        }
-
-        // Disable Ctrl + U
-        if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
-            return false;
-        }
-    })
-
     let datatable, id_data, $get, status_crud = false,
         $insert, $update, $delete, $import, map, map_modal,
         marker_modal, legend;
@@ -292,15 +263,7 @@
                 data: {},
                 beforeSend: () => {
                     if (!status_crud) {
-                        Swal.fire({
-                            title: 'Loading...',
-                            allowEscapeKey: false,
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        })
+                        loading()
                     }
                 },
                 complete: () => {
@@ -668,20 +631,12 @@
         $insert = (form) => {
             $('#form_tambah button[type=submit]').hide();
             $('#form_tambah button.loader').show();
-            Swal.fire({
-                title: 'Loading...',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            })
+            loading()
 
+            status_crud = true
             let formData = new FormData(form);
             axios.post("{{ route('backend.admin.mahasiswa.insert') }}", formData)
                 .then(res => {
-                    status_crud = true
                     initMap()
 
                     // Upload File
@@ -704,7 +659,6 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
-
                     datatable.ajax.reload();
                 }).catch(err => {
                     if (err.response.data.errors) {
@@ -741,21 +695,13 @@
 
         // Update Data
         $update = (form) => {
-            Swal.fire({
-                title: 'Loading...',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            })
+            loading()
 
+            status_crud = true
             let formData = new FormData(form);
             formData.append('_method', 'PUT')
             axios.post("{{ route('backend.admin.mahasiswa.update') }}", formData)
                 .then(res => {
-                    status_crud = true
                     initMap()
 
                     // Upload File
@@ -830,14 +776,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    })
+                    loading()
 
                     let formData = new FormData();
                     formData.append('id', $(element).data('id'));
@@ -855,8 +794,6 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-
-                            datatable.ajax.reload()
                         }).catch(err => {
                             console.error(err);
                             Swal.fire({
@@ -864,6 +801,8 @@
                                 title: 'Oops...',
                                 text: err.response.statusText
                             })
+                        }).then(() => {
+                            datatable.ajax.reload()
                         })
                 }
             })
@@ -880,14 +819,7 @@
                 confirmButtonText: 'Yes, import it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Loading...',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    })
+                    loading()
 
                     let formData = new FormData(form);
                     axios.post("{{ route('backend.admin.mahasiswa.import_excel') }}", formData)

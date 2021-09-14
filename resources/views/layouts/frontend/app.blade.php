@@ -210,14 +210,98 @@
     <script
         src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.video.min.js">
     </script>
+
+    <!-- Pusher -->
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script> 
+
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Form Validation Custom -->
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/form-validation-custom.js"></script>
+
+    <!-- Bootstrap Custom File Input -->
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
     <script src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/js/plugins.js"></script>
     <script src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/js/scripts.js"></script>
 
     <!-- Custom Javascripts -->
     <script src="{{ asset('assets/frontend/js/app.js') }}" defer></script>
     <script>
-        $(document).ready(function() {
+        let csrf, loading;
+
+        // Document ready
+        $(() => {
+
+            /**
+            * Keperluan show preloader
+            */
+            // ================================================== //
             $('.preloader-container').fadeOut(500)
+
+            /**
+            * Keperluan resize Google Recaptchaa
+            */
+            // ================================================== //
+            
+            let width = $('.g-recaptcha').parent().width();
+            if (width < 302) {
+                let scale = width / 302;
+                $('.g-recaptcha').css('transform', 'scale(' + scale + ')');
+                $('.g-recaptcha').css('-webkit-transform', 'scale(' + scale + ')');
+                $('.g-recaptcha').css('transform-origin', '0 0');
+                $('.g-recaptcha').css('-webkit-transform-origin', '0 0');
+            }
+
+            /**
+            * Keperluan disable inspect element
+            */
+            // ================================================== //
+            
+            // Disable right click
+            $(document).contextmenu(function(event) {
+                event.preventDefault()
+            })
+
+            $(document).keydown(function(event) {
+                // Disable F12
+                if (event.keyCode == 123) return false;
+
+                // Disable Ctrl + Shift + I
+                if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
+                    return false;
+                }
+
+                // Disable Ctrl + Shift + J
+                if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
+                    return false;
+                }
+
+                // Disable Ctrl + U
+                if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
+                    return false;
+                }
+            })
+
+            /**
+            * Keperluan show loading
+            */
+            // ================================================== //
+            loading = () => {
+                Swal.fire({
+                    title: 'Loading...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                })
+            }
         })
     </script>
     @stack('scripts')

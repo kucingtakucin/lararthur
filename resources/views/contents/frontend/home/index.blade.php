@@ -1,7 +1,7 @@
 @extends('layouts.frontend.app')
 
 @push('styles')
-
+    @include('contents.frontend.home.css.style_css')
 @endpush
 
 @section('header')
@@ -685,5 +685,5 @@
 @endsection
 
 @push('scripts')
-
+    @include('contents.frontend.home.js.script_js')
 @endpush
