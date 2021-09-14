@@ -215,7 +215,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="col-md-12" for="username">Username</label>
-                                                <input type="text" id="ubah_username" class="form-control" name="username" value="<?= user()->username ?>" readonly required autocomplete="off" placeholder="Masukkan Username">
+                                                <input type="text" id="ubah_username" class="form-control" name="username" value="<?= auth('web')->user()->username ?>" readonly required autocomplete="off" placeholder="Masukkan Username">
                                                 <?= validation_feedback("username", "wajib diisi") ?>
                                             </div>
                                         </div>
@@ -230,7 +230,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="id" id="id" value="<?= user()->id ?>">
+                                    <input type="hidden" name="id" id="id" value="<?= auth('web')->user()->id ?>">
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">Close</button>
