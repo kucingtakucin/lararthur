@@ -11,7 +11,7 @@ class AccountController extends Controller
 {
     public function update(Request $request)
     {
-        $this->validator()->validate();
+        $this->validator($request->all())->validate();
         $user = User::find($request->id);
         $user->password = Hash::make($request->password);
         $user->save();
