@@ -113,9 +113,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->_adminDashboard($prefix, $middleware, $namespace);
         $this->_adminMahasiswa($prefix, $middleware, $namespace);
-        $this->_adminRoles($prefix, $middleware, $namespace);
-        $this->_adminPermissions($prefix, $middleware, $namespace);
-        $this->_adminUser($prefix, $middleware, $namespace);
+        $this->_adminAccount($prefix, $middleware, $namespace);
     }
 
     private function _adminDashboard($prefix, $middleware, $namespace)
@@ -134,27 +132,11 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/admin/mahasiswa.php'));
     }
 
-    private function _adminRoles($prefix, $middleware, $namespace)
+    public function _adminAccount($prefix, $middleware, $namespace)
     {
-        Route::prefix($prefix . '/roles')
+        Route::prefix($prefix . '/account')
             ->middleware($middleware)
             ->namespace($this->namespace . $namespace)
-            ->group(base_path('routes/admin/roles.php'));
-    }
-
-    private function _adminPermissions($prefix, $middleware, $namespace)
-    {
-        Route::prefix($prefix . '/permissions')
-            ->middleware($middleware)
-            ->namespace($this->namespace . $namespace)
-            ->group(base_path('routes/admin/permissions.php'));
-    }
-
-    private function _adminUser($prefix, $middleware, $namespace)
-    {
-        Route::prefix($prefix . '/user')
-            ->middleware($middleware)
-            ->namespace($this->namespace . $namespace)
-            ->group(base_path('routes/admin/user.php'));
+            ->group(base_path('routes/admin/account.php'));
     }
 }

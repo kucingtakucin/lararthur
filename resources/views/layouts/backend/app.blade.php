@@ -414,7 +414,7 @@
             $edit_account = async (form) => {
                 let formData = new FormData(form)
 
-                axios.post("auth/edit_account", formData)
+                axios.post("{{ route('backend.admin.account.update') }}", formData)
                     .then(res => {
                         Swal.fire({
                             icon: 'success',
