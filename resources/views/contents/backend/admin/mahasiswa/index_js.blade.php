@@ -678,10 +678,10 @@
                 }
             })
 
-            status_crud = true
             let formData = new FormData(form);
             axios.post("{{ route('backend.admin.mahasiswa.insert') }}", formData)
                 .then(res => {
+                    status_crud = true
                     initMap()
 
                     // Upload File
@@ -705,6 +705,7 @@
                         timer: 1500
                     })
 
+                    datatable.ajax.reload();
                 }).catch(err => {
                     if (err.response.data.errors) {
                         let errors = '';
@@ -735,7 +736,6 @@
                     $('#form_tambah select').val(null).trigger('change')
                     $('#form_tambah').removeClass('was-validated')
                     $('#modal_tambah').modal('hide');
-                    datatable.ajax.reload();
                 })
         }
 
@@ -751,11 +751,11 @@
                 }
             })
 
-            status_crud = true
             let formData = new FormData(form);
             formData.append('_method', 'PUT')
             axios.post("{{ route('backend.admin.mahasiswa.update') }}", formData)
                 .then(res => {
+                    status_crud = true
                     initMap()
 
                     // Upload File
@@ -782,6 +782,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
+                    datatable.ajax.reload();
                 }).catch(err => {
                     console.log(err)
 
@@ -814,7 +815,6 @@
                     $('#form_ubah select').val(null).trigger('change')
                     $('#form_ubah').removeClass('was-validated')
                     $('#modal_ubah').modal('hide');
-                    datatable.ajax.reload();
                 })
         }
 
@@ -855,6 +855,8 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
+
+                            datatable.ajax.reload()
                         }).catch(err => {
                             console.error(err);
                             Swal.fire({
@@ -862,8 +864,6 @@
                                 title: 'Oops...',
                                 text: err.response.statusText
                             })
-                        }).then(() => {
-                            datatable.ajax.reload()
                         })
                 }
             })
