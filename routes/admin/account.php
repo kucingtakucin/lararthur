@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'AccountController@update')->name('backend.admin.account.update');
+Route::post('/', 'AccountController@update')->name('backend.admin.account.update');
