@@ -215,7 +215,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="col-md-12" for="username">Username</label>
-                                                <input type="text" id="ubah_username" class="form-control" name="username" value="<?= auth('web')->user()->username ?>" readonly required autocomplete="off" placeholder="Masukkan Username">
+                                                <input type="text" id="ubah_username" class="form-control" name="username" value="<?= auth('web')->user()->name ?>" readonly required autocomplete="off" placeholder="Masukkan Username">
                                                 <?= validation_feedback("username", "wajib diisi") ?>
                                             </div>
                                         </div>
