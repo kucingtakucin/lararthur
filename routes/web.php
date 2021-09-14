@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Home\HomeController@index')->name('frontend.home.index');
-
+Route::get('/', 'HomeController@index')->name('frontend.home.index');
+Route::prefix('pengaduan')->group(function () {
+    Route::get('/', 'PengaduanController@index')->name('frontend.home.pengaduan.index');
+    Route::get('/insert', 'PengaduanController@insert')->name('front.home.pengaduan.insert');
+});
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/img/{path}', '\App\Http\Controllers\ImageController@show')->where('path', '.*');
