@@ -23,8 +23,8 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             if (User::find(Auth::guard($guard)->id())->hasRole('admin')) {
                 return redirect()->route('backend.admin.dashboard.index');
-            } else if (User::find(Auth::guard($guard)->id())->hasRole('member')) {
-                // 
+            } else if (User::find(Auth::guard($guard)->id())->hasRole('operator')) {
+                return redirect()->route('backend.operator.dashboard.index');
             }
         }
 
