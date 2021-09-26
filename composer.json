@@ -25,6 +25,7 @@
         "league/glide-laravel": "^1.0",
         "phpoffice/phpspreadsheet": "^1.18",
         "phpoffice/phpword": "^0.18.2",
+        "pusher/pusher-php-server": "^4.1",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "santigarcor/laratrust": "5.2.*",
         "tymon/jwt-auth": "^1.0",

@@ -25,6 +25,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <!-- Google re-Captcha  -->
+    {!! NoCaptcha::renderJs() !!}
+
     <!-- Stylesheets Plugin -->
     <link rel="stylesheet" type="text/css"
         href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/css/bootstrap.min.css">
@@ -107,7 +110,8 @@
                         <a href="{{ route('frontend.home.index') }}"><img src="#"
                                 srcset="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light.png 1x, https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light@2x.png 2x"
                                 alt="" /></a>
-                        <button class="plain offcanvas-close offcanvas-nav-close"><i class="jam jam-close"></i></button>
+                        <button class="plain offcanvas-close offcanvas-nav-close"><i
+                                class="jam jam-close"></i></button>
                     </div>
 
                     <!-- Navbar -->
@@ -132,7 +136,8 @@
             <div class="widget">
                 <h5 class="widget-title">Contact Info</h5>
                 <address> Moonshine St. 14/05 <br /> Light City, London <div class="space20"></div>
-                    <a href="mailto:first.last@email.com" class="nocolor">info@email.com</a><br /> +00 (123) 456 78 90
+                    <a href="mailto:first.last@email.com" class="nocolor">info@email.com</a><br /> +00 (123) 456
+                    78 90
                 </address>
             </div>
             <!-- /.widget -->
@@ -212,7 +217,7 @@
     </script>
 
     <!-- Pusher -->
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script> 
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
     <!-- Axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -234,20 +239,66 @@
     <script>
         let csrf, loading;
 
+        /**
+         * Keperluan disable inspect element
+         */
+        // ================================================== //
+
+        // Disable right click
+        $(document).contextmenu(function(event) {
+            event.preventDefault()
+        })
+
+        $(document).keydown(function(event) {
+            // Disable F12
+            if (event.keyCode == 123) return false;
+
+            // Disable Ctrl + Shift + I
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
+                return false;
+            }
+
+            // Disable Ctrl + Shift + J
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
+                return false;
+            }
+
+            // Disable Ctrl + U
+            if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
+                return false;
+            }
+        })
+
+        /**
+         * Keperluan show loading
+         */
+        // ================================================== //
+        loading = () => {
+            Swal.fire({
+                title: 'Loading...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            })
+        }
+
         // Document ready
         $(() => {
 
             /**
-            * Keperluan show preloader
-            */
+             * Keperluan show preloader
+             */
             // ================================================== //
             $('.preloader-container').fadeOut(500)
 
             /**
-            * Keperluan resize Google Recaptchaa
-            */
+             * Keperluan resize Google Recaptchaa
+             */
             // ================================================== //
-            
+
             let width = $('.g-recaptcha').parent().width();
             if (width < 302) {
                 let scale = width / 302;
@@ -255,52 +306,6 @@
                 $('.g-recaptcha').css('-webkit-transform', 'scale(' + scale + ')');
                 $('.g-recaptcha').css('transform-origin', '0 0');
                 $('.g-recaptcha').css('-webkit-transform-origin', '0 0');
-            }
-
-            /**
-            * Keperluan disable inspect element
-            */
-            // ================================================== //
-            
-            // Disable right click
-            $(document).contextmenu(function(event) {
-                event.preventDefault()
-            })
-
-            $(document).keydown(function(event) {
-                // Disable F12
-                if (event.keyCode == 123) return false;
-
-                // Disable Ctrl + Shift + I
-                if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
-                    return false;
-                }
-
-                // Disable Ctrl + Shift + J
-                if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
-                    return false;
-                }
-
-                // Disable Ctrl + U
-                if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
-                    return false;
-                }
-            })
-
-            /**
-            * Keperluan show loading
-            */
-            // ================================================== //
-            loading = () => {
-                Swal.fire({
-                    title: 'Loading...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                })
             }
         })
     </script>

@@ -124,6 +124,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->_adminDashboard($prefix, $middleware, $namespace);
         $this->_adminMahasiswa($prefix, $middleware, $namespace);
         $this->_adminAccount($prefix, $middleware, $namespace);
+        $this->_adminPengaduan($prefix, $middleware, $namespace);
     }
 
     private function _adminDashboard($prefix, $middleware, $namespace)
@@ -142,12 +143,20 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/admin/mahasiswa.php'));
     }
 
-    public function _adminAccount($prefix, $middleware, $namespace)
+    private function _adminAccount($prefix, $middleware, $namespace)
     {
         Route::prefix($prefix . '/account')
             ->middleware($middleware)
             ->namespace($this->namespace . $namespace)
             ->group(base_path('routes/admin/account.php'));
+    }
+
+    private function _adminPengaduan($prefix, $middleware, $namespace)
+    {
+        Route::prefix($prefix . '/pengaduan')
+            ->middleware($middleware)
+            ->namespace($this->namespace . $namespace)
+            ->group(base_path('routes/admin/pengaduan.php'));
     }
 
     /**

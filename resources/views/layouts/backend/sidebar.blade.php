@@ -18,10 +18,17 @@
             <h6>Menu Data</h6>
         </div>
     </li>
-    <li class="sidebar-list"><a
-            class="nav-link sidebar-title sidebar-link {{ request()->is('*mahasiswa*') ? __('active') : '' }}"
-            href="{{ route('backend.admin.mahasiswa.index') }}"><i
-                data-feather="book-open"></i><span>Mahasiswa</span></a></li>
+    <li class="sidebar-list">
+        <a class="nav-link sidebar-title sidebar-link {{ request()->is('*mahasiswa*') ? __('active') : '' }}"
+            href="{{ route('backend.admin.mahasiswa.index') }}"><i data-feather="book-open"></i><span>Mahasiswa</span>
+        </a>
+    </li>
+    <li class="sidebar-list">
+        <a class="nav-link sidebar-title sidebar-link {{ request()->is('*pengaduan*') ? __('active') : '' }}"
+            href="{{ route('backend.admin.pengaduan.index') }}"><i
+                data-feather="message-square"></i><span>Pengaduan</span>
+        </a>
+    </li>
 
     <li class="sidebar-main-title">
         <div>
@@ -60,7 +67,7 @@
 
 <!-- Sidebar Operator -->
 @if (User::find(auth('web')->id())->hasRole('operator'))
- <!-- Operator -->
+    <!-- Operator -->
     <li class="back-btn">
         <div class="mobile-back text-right">
             <span>Back</span>
@@ -69,7 +76,8 @@
     </li>
     <li class="sidebar-list">
         <a class="nav-link sidebar-title sidebar-link {{ request()->is('*dashboard*') ? __('active') : '' }}"
-            href="{{ route('backend.operator.dashboard.index') }}"><i data-feather="home"></i><span>Dashboard</span></a>
+            href="{{ route('backend.operator.dashboard.index') }}"><i
+                data-feather="home"></i><span>Dashboard</span></a>
     </li>
 @endif
 <!-- CONTOH SIDEBAR -->

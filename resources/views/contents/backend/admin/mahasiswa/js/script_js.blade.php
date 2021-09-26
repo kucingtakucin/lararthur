@@ -20,9 +20,9 @@
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     }),
-                ]
+                ],
+                scrollWheelZoom: false,
             })
-            map.scrollWheelZoom.disable();
 
             /** Legend */
             legend = L.control({
@@ -43,21 +43,15 @@
                         onEachFeature: (feature, layer) => {
                             layer.on({
                                 mouseover: (event) => {
-                                    let layer = event
-                                        .target;
+                                    let layer = event.target;
                                     layer.setStyle({
                                         weight: 5,
                                         dashArray: '',
                                         fillOpacity: 0.7
                                     });
-                                    if (!L.Browser.ie &&
-                                        !L
-                                        .Browser
-                                        .opera &&
-                                        !L.Browser
-                                        .edge) {
-                                        layer
-                                            .bringToFront();
+                                    if (!L.Browser.ie && !L.Browser.opera &&
+                                        !L.Browser.edge) {
+                                        layer.bringToFront();
                                     }
                                 },
                                 mouseout: (event) => {
@@ -121,9 +115,7 @@
                                         closeOnClick: false
                                     })
                                     .setContent(`<b>${item.nama}</b>`)
-                                    .setLatLng([item.latitude, item
-                                        .longitude
-                                    ])
+                                    .setLatLng([item.latitude, item.longitude])
                                 ).openPopup();
                         }
                     })
@@ -142,14 +134,14 @@
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     }),
 
-                ]
+                ],
+                scrollWheelZoom: false,
             })
 
             setTimeout(() => {
                 map_modal.invalidateSize()
             }, 500);
 
-            map_modal.scrollWheelZoom.disable();
             map_modal.on('click', (event) => {
                 if (marker_modal) map_modal.removeLayer(marker_modal)
                 marker_modal = L.marker([event.latlng.lat, event.latlng
@@ -274,7 +266,7 @@
                     setTimeout(async () => {
                         await Swal.hideLoading()
                         await Swal.close()
-                    },10);
+                    }, 10);
                 }
             },
             columnDefs: [{

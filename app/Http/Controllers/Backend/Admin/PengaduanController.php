@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Backend\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Pengaduan;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Http\JsonResponse;
+use Yajra\DataTables\DataTables;
 
 class PengaduanController extends Controller
 {
@@ -29,7 +29,7 @@ class PengaduanController extends Controller
             ->toJson();
     }
 
-    public function chat(Request $request)
+    public function chat()
     {
         return view('contents.backend.admin.pengaduan.chat.index');
     }

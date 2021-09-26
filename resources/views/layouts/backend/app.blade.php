@@ -112,6 +112,9 @@
                 <div class="nav-right col-11 pull-right right-header p-0">
                     <ul class="nav-menus">
                         <li>
+                            <div class="settings" id="c-pills-home-tab"><i class="icon-settings"></i></div>
+                        </li>
+                        <li>
                             <div class="mode"><i class="fa fa-moon-o"></i></div>
                         </li>
                         <li class="maximize"><a class="text-dark" href="#!"
@@ -202,41 +205,52 @@
                 </div>
                 <!-- Container-fluid Ends-->
 
-                <div class="modal fade" id="modal_account" role="dialog" aria-labelledby="modal-popin" aria-hidden="true">
+                <div class="modal fade" id="modal_account" role="dialog" aria-labelledby="modal-popin"
+                    aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form class="needs-validation" id="form_account" method="post" enctype="multipart/form-data" novalidate>
+                            <form class="needs-validation" id="form_account" method="post" enctype="multipart/form-data"
+                                novalidate>
                                 <div class="modal-header">
                                     <h5 class="modal-title">Edit Account</h5>
-                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"
+                                        data-original-title="" title=""><span aria-hidden="true">×</span></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="col-md-12" for="username">Username</label>
-                                                <input type="text" id="ubah_username" class="form-control" name="username" value="<?= auth('web')->user()->name ?>" readonly required autocomplete="off" placeholder="Masukkan Username">
-                                                <?= validation_feedback("username", "wajib diisi") ?>
+                                                <input type="text" id="ubah_username" class="form-control"
+                                                    name="username" value="<?= auth('web')->user()->name ?>" readonly
+                                                    required autocomplete="off" placeholder="Masukkan Username">
+                                                <?= validation_feedback('username', 'wajib diisi') ?>
                                             </div>
                                         </div>
-                                    
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="col-md-12" for="password">Password</label>
-                                                <input type="password" id="ubah_password" class="form-control" name="password" minlength="8" required autocomplete="off" placeholder="Masukkan Password">
-                                                <?= validation_feedback("password", "wajib diisi dan minimal 8 karakter") ?>
+                                                <input type="password" id="ubah_password" class="form-control"
+                                                    name="password" minlength="8" required autocomplete="off"
+                                                    placeholder="Masukkan Password">
+                                                <?= validation_feedback('password', 'wajib diisi dan minimal 8 karakter') ?>
                                             </div>
                                         </div>
                                     </div>
                                     <input type="hidden" name="id" id="id" value="<?= auth('web')->user()->id ?>">
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">Close</button>
-                                    <button class="btn btn-primary" type="submit" data-original-title="" title="">Submit Data</button>
-                                    <button class="btn btn-primary loader" type="button" disabled style="display: none;">
-                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal"
+                                        data-original-title="" title="">Close</button>
+                                    <button class="btn btn-primary" type="submit" data-original-title="" title="">Submit
+                                        Data</button>
+                                    <button class="btn btn-primary loader" type="button" disabled
+                                        style="display: none;">
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
                                         Loading...
                                     </button>
                                 </div>
@@ -312,29 +326,105 @@
     <!-- Pusher -->
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
+    <!-- SocketIO  -->
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"
+        integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous">
+    </script>
+
     <!-- Custom Javascripts -->
     <script src="{{ asset('assets/backend/js/app.js') }}"></script>
- <script>
-        let csrf, loading, $edit_account, pusher, channel;
+    <script>
+        let loading, $edit_account, pusher, channel;
+
+        /**
+         * Keperluan disable inspect element
+         */
+        // ================================================== //
+
+        // Disable right click
+        $(document).contextmenu(function(event) {
+            event.preventDefault()
+        })
+
+        $(document).keydown(function(event) {
+            // Disable F12
+            if (event.keyCode == 123) return false;
+
+            // Disable Ctrl + Shift + I
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
+                return false;
+            }
+
+            // Disable Ctrl + Shift + J
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
+                return false;
+            }
+
+            // Disable Ctrl + U
+            if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
+                return false;
+            }
+        })
+
+        /**
+         * Keperluan show loading
+         */
+        // ================================================== //
+        loading = () => {
+            Swal.fire({
+                title: 'Loading...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            })
+        }
+
         $(document).ready(function() {
 
             /**
-            * Keperluan pusher pengaduan
-            */
+             * Keperluan pusher pengaduan
+             */
             // ================================================== //
-            
+            // Enable pusher logging - don't include this in production
+            // Pusher.logToConsole = true;
+
+            // pusher = new Pusher('7d726cdbb893f83bd042', {
+            //     cluster: 'ap1'
+            // });
+
+            // channel = pusher.subscribe('kirim-pengaduan-channel');
+            // channel.bind('kirim-pengaduan-event', function(data) {
+            //     Swal.fire({
+            //         title: data.title,
+            //         icon: 'info',
+            //         text: data.message
+            //     })
+            // });
+
+            Echo.channel(`kirim-pengaduan-channel`)
+                .listen('.kirim-pengaduan-event', (e) => {
+                    console.log(e)
+                    Swal.fire({
+                        title: 'Pemberitahuan',
+                        icon: 'info',
+                        text: e.message
+                    })
+                });
 
             /**
-            * Keperluan show preloader
-            */
+             * Keperluan show preloader
+             */
             // ================================================== //
             $('.preloader-container').fadeOut(500)
 
             /**
-            * Keperluan resize Google Recaptchaa
-            */
+             * Keperluan resize Google Recaptchaa
+             */
             // ================================================== //
-            
+
             let width = $('.g-recaptcha').parent().width();
             if (width < 302) {
                 let scale = width / 302;
@@ -345,57 +435,10 @@
             }
 
             /**
-            * Keperluan disable inspect element
-            */
+             * Keperluan edit account
+             */
             // ================================================== //
-            
-            // Disable right click
-            $(document).contextmenu(function(event) {
-                event.preventDefault()
-            })
-
-            $(document).keydown(function(event) {
-                // Disable F12
-                if (event.keyCode == 123) return false;
-
-                // Disable Ctrl + Shift + I
-                if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
-                    return false;
-                }
-
-                // Disable Ctrl + Shift + J
-                if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
-                    return false;
-                }
-
-                // Disable Ctrl + U
-                if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
-                    return false;
-                }
-            })
-
-            /**
-            * Keperluan show loading
-            */
-            // ================================================== //
-            loading = () => {
-                Swal.fire({
-                    title: 'Loading...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                })
-            }
-
-
-            /**
-            * Keperluan edit account
-            */
-            // ================================================== //
-            $('#edit-account').click(function () {
+            $('#edit-account').click(function() {
                 $('#modal_account').modal('show')
             })
 
@@ -406,7 +449,7 @@
                 }
             });
 
-             $('#modal_account').on('hide.bs.modal', () => {
+            $('#modal_account').on('hide.bs.modal', () => {
                 $('#form_account').removeClass('was-validated')
                 $('#form_account').trigger('reset')
             })

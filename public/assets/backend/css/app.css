@@ -1,3 +1,7 @@
+.nav-menus li .settings {
+  cursor: pointer !important;
+}
+
 .preloader-container {
   display: flex;
   position: fixed;

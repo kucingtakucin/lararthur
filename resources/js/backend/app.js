@@ -387,82 +387,82 @@ $("#flip-back").click(function () {
 })
 
 $(".toggle-nav").click(function () {
-	$('#sidebar-links .nav-menu').css("left", "0px");
+    $('#sidebar-links .nav-menu').css("left", "0px");
 });
 $(".mobile-back").click(function () {
-	$('#sidebar-links .nav-menu').css("left", "-410px");
+    $('#sidebar-links .nav-menu').css("left", "-410px");
 });
 $(".page-wrapper").attr("class", "page-wrapper " + localStorage.getItem('page-wrapper'));
 $(".page-body-wrapper").attr("class", "page-body-wrapper " + localStorage.getItem('page-body-wrapper'));
 if (localStorage.getItem("page-wrapper") === null) {
-	$(".page-wrapper").addClass("compact-wrapper");
-	$(".page-body-wrapper").addClass("sidebar-icon");
+    $(".page-wrapper").addClass("compact-wrapper");
+    $(".page-body-wrapper").addClass("sidebar-icon");
 }
 
 // left sidebar and vertical menu
 if ($('#pageWrapper').hasClass('compact-wrapper')) {
-	jQuery('.sidebar-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-	jQuery('.sidebar-title').click(function () {
-		jQuery('.sidebar-title').removeClass('active').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-		jQuery('.sidebar-submenu, .menu-content').slideUp('normal');
-		jQuery('.menu-content').slideUp('normal');
-		if (jQuery(this).next().is(':hidden') == true) {
-			jQuery(this).addClass('active');
-			jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-			jQuery(this).next().slideDown('normal');
-		} else {
-			jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-		}
-	});
-	jQuery('.sidebar-submenu, .menu-content').hide();
-	jQuery('.submenu-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-	jQuery('.submenu-title').click(function () {
-		jQuery('.submenu-title').removeClass('active').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-		jQuery('.submenu-content').slideUp('normal');
-		if (jQuery(this).next().is(':hidden') == true) {
-			jQuery(this).addClass('active');
-			jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-			jQuery(this).next().slideDown('normal');
-		} else {
-			jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-		}
-	});
-	jQuery('.submenu-content').hide();
+    jQuery('.sidebar-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+    jQuery('.sidebar-title').click(function () {
+        jQuery('.sidebar-title').removeClass('active').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+        jQuery('.sidebar-submenu, .menu-content').slideUp('normal');
+        jQuery('.menu-content').slideUp('normal');
+        if (jQuery(this).next().is(':hidden') == true) {
+            jQuery(this).addClass('active');
+            jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+            jQuery(this).next().slideDown('normal');
+        } else {
+            jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+        }
+    });
+    jQuery('.sidebar-submenu, .menu-content').hide();
+    jQuery('.submenu-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+    jQuery('.submenu-title').click(function () {
+        jQuery('.submenu-title').removeClass('active').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+        jQuery('.submenu-content').slideUp('normal');
+        if (jQuery(this).next().is(':hidden') == true) {
+            jQuery(this).addClass('active');
+            jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+            jQuery(this).next().slideDown('normal');
+        } else {
+            jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+        }
+    });
+    jQuery('.submenu-content').hide();
 } else if ($('#pageWrapper').hasClass('horizontal-wrapper')) {
-	var contentwidth = jQuery(window).width();
-	if ((contentwidth) < '992') {
-		$('#pageWrapper').removeClass('horizontal-wrapper').addClass('compact-wrapper');
-		$('.page-body-wrapper').removeClass('horizontal-menu').addClass('sidebar-icon');
-		jQuery('.submenu-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-		jQuery('.submenu-title').click(function () {
-			jQuery('.submenu-title').removeClass('active');
-			jQuery('.submenu-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-			jQuery('.submenu-content').slideUp('normal');
-			if (jQuery(this).next().is(':hidden') == true) {
-				jQuery(this).addClass('active');
-				jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-				jQuery(this).next().slideDown('normal');
-			} else {
-				jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-			}
-		});
-		jQuery('.submenu-content').hide();
+    var contentwidth = jQuery(window).width();
+    if ((contentwidth) < '992') {
+        $('#pageWrapper').removeClass('horizontal-wrapper').addClass('compact-wrapper');
+        $('.page-body-wrapper').removeClass('horizontal-menu').addClass('sidebar-icon');
+        jQuery('.submenu-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+        jQuery('.submenu-title').click(function () {
+            jQuery('.submenu-title').removeClass('active');
+            jQuery('.submenu-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+            jQuery('.submenu-content').slideUp('normal');
+            if (jQuery(this).next().is(':hidden') == true) {
+                jQuery(this).addClass('active');
+                jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+                jQuery(this).next().slideDown('normal');
+            } else {
+                jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+            }
+        });
+        jQuery('.submenu-content').hide();
 
-		jQuery('.sidebar-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-		jQuery('.sidebar-title').click(function () {
-			jQuery('.sidebar-title').removeClass('active');
-			jQuery('.sidebar-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-			jQuery('.sidebar-submenu, .menu-content').slideUp('normal');
-			if (jQuery(this).next().is(':hidden') == true) {
-				jQuery(this).addClass('active');
-				jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-				jQuery(this).next().slideDown('normal');
-			} else {
-				jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
-			}
-		});
-		jQuery('.sidebar-submenu, .menu-content').hide();
-	}
+        jQuery('.sidebar-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+        jQuery('.sidebar-title').click(function () {
+            jQuery('.sidebar-title').removeClass('active');
+            jQuery('.sidebar-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+            jQuery('.sidebar-submenu, .menu-content').slideUp('normal');
+            if (jQuery(this).next().is(':hidden') == true) {
+                jQuery(this).addClass('active');
+                jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+                jQuery(this).next().slideDown('normal');
+            } else {
+                jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
+            }
+        });
+        jQuery('.sidebar-submenu, .menu-content').hide();
+    }
 }
 
 // toggle sidebar
@@ -470,53 +470,53 @@ $nav = $('.sidebar-wrapper');
 $header = $('.page-header');
 $toggle_nav_top = $('.toggle-sidebar');
 $toggle_nav_top.click(function () {
-	$this = $(this);
-	$nav = $('.sidebar-wrapper');
-	$nav.toggleClass('close_icon');
-	$header.toggleClass('close_icon');
+    $this = $(this);
+    $nav = $('.sidebar-wrapper');
+    $nav.toggleClass('close_icon');
+    $header.toggleClass('close_icon');
 });
 
 $(window).resize(function () {
-	$nav = $('.sidebar-wrapper');
-	$header = $('.page-header');
-	$toggle_nav_top = $('.toggle-sidebar');
-	$toggle_nav_top.click(function () {
-		$this = $(this);
-		$nav = $('.sidebar-wrapper');
-		$nav.toggleClass('close_icon');
-		$header.toggleClass('close_icon');
-	});
+    $nav = $('.sidebar-wrapper');
+    $header = $('.page-header');
+    $toggle_nav_top = $('.toggle-sidebar');
+    $toggle_nav_top.click(function () {
+        $this = $(this);
+        $nav = $('.sidebar-wrapper');
+        $nav.toggleClass('close_icon');
+        $header.toggleClass('close_icon');
+    });
 });
 
 $body_part_side = $('.body-part');
 $body_part_side.click(function () {
-	$toggle_nav_top.attr('checked', false);
-	$nav.addClass('close_icon');
-	$header.addClass('close_icon');
+    $toggle_nav_top.attr('checked', false);
+    $nav.addClass('close_icon');
+    $header.addClass('close_icon');
 });
 
 //    responsive sidebar
 var $window = $(window);
 var widthwindow = $window.width();
 (function ($) {
-	"use strict";
-	if (widthwindow <= 991) {
-		$toggle_nav_top.attr('checked', false);
-		$nav.addClass("close_icon");
-		$header.addClass("close_icon");
-	}
+    "use strict";
+    if (widthwindow <= 991) {
+        $toggle_nav_top.attr('checked', false);
+        $nav.addClass("close_icon");
+        $header.addClass("close_icon");
+    }
 })(jQuery);
 $(window).resize(function () {
-	var widthwindaw = $window.width();
-	if (widthwindaw <= 991) {
-		$toggle_nav_top.attr('checked', false);
-		$nav.addClass("close_icon");
-		$header.addClass("close_icon");
-	} else {
-		$toggle_nav_top.attr('checked', true);
-		$nav.removeClass("close_icon");
-		$header.removeClass("close_icon");
-	}
+    var widthwindaw = $window.width();
+    if (widthwindaw <= 991) {
+        $toggle_nav_top.attr('checked', false);
+        $nav.addClass("close_icon");
+        $header.addClass("close_icon");
+    } else {
+        $toggle_nav_top.attr('checked', true);
+        $nav.removeClass("close_icon");
+        $header.removeClass("close_icon");
+    }
 });
 
 // horizontal arrows
@@ -527,49 +527,49 @@ var leftsideLimit = -500
 // var Windowwidth = jQuery(window).width();
 // get wrapper width
 var getMenuWrapperSize = function () {
-	return $('.sidebar-wrapper').innerWidth();
+    return $('.sidebar-wrapper').innerWidth();
 }
 var menuWrapperSize = getMenuWrapperSize();
 
 if ((menuWrapperSize) > '1460') {
-	var sliderLimit = -2900
+    var sliderLimit = -2900
 } else if ((menuWrapperSize) >= '992') {
-	var sliderLimit = -1000
+    var sliderLimit = -1000
 } else {
-	var sliderLimit = -0
+    var sliderLimit = -0
 }
 
 $("#left-arrow").addClass("disabled");
 $("#right-arrow").click(function () {
-	var currentPosition = parseInt(view.css("marginLeft"));
-	if (currentPosition >= sliderLimit) {
-		$("#left-arrow").removeClass("disabled");
-		view.stop(false, true).animate({
-			marginLeft: "-=" + move
-		}, {
-			duration: 400
-		})
-		if (currentPosition == sliderLimit) {
-			$(this).addClass("disabled");
-			console.log("sliderLimit", sliderLimit);
-		}
-	}
+    var currentPosition = parseInt(view.css("marginLeft"));
+    if (currentPosition >= sliderLimit) {
+        $("#left-arrow").removeClass("disabled");
+        view.stop(false, true).animate({
+            marginLeft: "-=" + move
+        }, {
+            duration: 400
+        })
+        if (currentPosition == sliderLimit) {
+            $(this).addClass("disabled");
+            console.log("sliderLimit", sliderLimit);
+        }
+    }
 });
 
 $("#left-arrow").click(function () {
-	var currentPosition = parseInt(view.css("marginLeft"));
-	if (currentPosition < 0) {
-		view.stop(false, true).animate({
-			marginLeft: "+=" + move
-		}, {
-			duration: 400
-		})
-		$("#right-arrow").removeClass("disabled");
-		$("#left-arrow").removeClass("disabled");
-		if (currentPosition >= leftsideLimit) {
-			$(this).addClass("disabled");
-		}
-	}
+    var currentPosition = parseInt(view.css("marginLeft"));
+    if (currentPosition < 0) {
+        view.stop(false, true).animate({
+            marginLeft: "+=" + move
+        }, {
+            duration: 400
+        })
+        $("#right-arrow").removeClass("disabled");
+        $("#left-arrow").removeClass("disabled");
+        if (currentPosition >= leftsideLimit) {
+            $(this).addClass("disabled");
+        }
+    }
 
 });
 
@@ -580,49 +580,425 @@ $("#left-arrow").click(function () {
 var current = window.location.pathname
 $(".sidebar-wrapper nav ul active > li a").filter(function () {
 
-	var link = $(this).attr("href");
-	if (link) {
-		if (current.indexOf(link) != -1) {
-			$(this).parents().children('a').addClass('active');
-			$(this).parents().parents().children('ul').css('display', 'block');
-			$(this).addClass('active');
-			$(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-			$(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-			return false;
-		}
-	}
+    var link = $(this).attr("href");
+    if (link) {
+        if (current.indexOf(link) != -1) {
+            $(this).parents().children('a').addClass('active');
+            $(this).parents().parents().children('ul').css('display', 'block');
+            $(this).addClass('active');
+            $(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+            $(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+            return false;
+        }
+    }
 });
 
 $('.left-header .mega-menu .nav-link').on('click', function (e) {
-	$(this).toggleClass("active");
-	$(this).parent().children('.mega-menu-container').toggleClass("d-block").slideToggle();
+    $(this).toggleClass("active");
+    $(this).parent().children('.mega-menu-container').toggleClass("d-block").slideToggle();
 });
 
 $(".left-header .level-menu .header-level-menu").css('display', 'none');
 $('.left-header .level-menu .nav-link').on('click', function (e) {
-	$(this).toggleClass("active");
-	$(this).parent().children('.header-level-menu').toggleClass("d-block").slideToggle();
+    $(this).toggleClass("active");
+    $(this).parent().children('.header-level-menu').toggleClass("d-block").slideToggle();
 });
 
 $('.left-header .link-section > div').on('click', function (e) {
-	if ($(window).width() <= 1199) {
-		$(".left-header .link-section > div").removeClass("active");
-		$(this).toggleClass("active");
-		$(this).parent().children('ul').toggleClass("d-block").slideToggle();
-	}
+    if ($(window).width() <= 1199) {
+        $(".left-header .link-section > div").removeClass("active");
+        $(this).toggleClass("active");
+        $(this).parent().children('ul').toggleClass("d-block").slideToggle();
+    }
 });
 
 if ($(window).width() <= 1199) {
-	$(".left-header .link-section").children('ul').css('display', 'none');
-	$(this).parent().children('ul').toggleClass("d-block").slideToggle();
+    $(".left-header .link-section").children('ul').css('display', 'none');
+    $(this).parent().children('ul').toggleClass("d-block").slideToggle();
 }
 if ($(window).width() <= 991) {
-	$('.sidebar-wrapper .back-btn').on('click', function (e) {
-		$(".page-header").toggleClass("close_icon");
-		$(".sidebar-wrapper").toggleClass("close_icon");
-	});
+    $('.sidebar-wrapper .back-btn').on('click', function (e) {
+        $(".page-header").toggleClass("close_icon");
+        $(".sidebar-wrapper").toggleClass("close_icon");
+    });
 }
 
 // $('.custom-scrollbar').animate({
 //     scrollTop: $('a.sidebar-link.sidebar-title.active').offset().top - 200
 // }, 1000);
+
+if (localStorage.getItem("color"))
+    $("#color").attr("href", "../assets/css/" + localStorage.getItem("color") + ".css");
+if (localStorage.getItem("dark"))
+    $("body").attr("class", "dark-only");
+$(`
+<div class="customizer-contain">
+<div class="tab-content" id="c-pills-tabContent">
+    <div class="customizer-header"> <i class="icofont-close icon-close"></i>
+        <h5>Preview Settings</h5>
+        <p class="mb-0">Try It Real Time <i class="fa fa-thumbs-o-up txt-primary"></i></p>
+    </div>
+    <div class="customizer-body custom-scrollbar">
+        <div class="tab-pane fade show active" id="c-pills-home" role="tabpanel" aria-labelledby="c-pills-home-tab">
+            <h6>Layout Type</h6>
+            <ul class="main-layout layout-grid">
+                <li data-attr="ltr" class="active">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-light sidebar"></li>
+                            <li class="bg-light body"> <span class="badge badge-primary">LTR</span></li>
+                        </ul>
+                    </div>
+                </li>
+                <li data-attr="rtl">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-light body"> <span class="badge badge-primary">RTL</span></li>
+                            <li class="bg-light sidebar"></li>
+                        </ul>
+                    </div>
+                </li>
+                <li data-attr="ltr" class="box-layout px-3">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-light sidebar"></li>
+                            <li class="bg-light body"> <span class="badge badge-primary">Box</span></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <h6 class="">Sidebar Type</h6>
+            <ul class="sidebar-type layout-grid">
+                <li data-attr="normal-sidebar">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-dark sidebar"></li>
+                            <li class="bg-light body"></li>
+                        </ul>
+                    </div>
+                </li>
+                <li data-attr="compact-sidebar">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-dark sidebar compact"></li>
+                            <li class="bg-light body"></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <h6 class="">Sidebar settings</h6>
+            <ul class="sidebar-setting layout-grid">
+                <li class="active" data-attr="default-sidebar">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body bg-light"> <span class="badge badge-primary">Default</span></div>
+                </li>
+                <li data-attr="border-sidebar">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body bg-light"> <span class="badge badge-primary">Border</span></div>
+                </li>
+                <li data-attr="iconcolor-sidebar">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body bg-light"> <span class="badge badge-primary">icon Color</span></div>
+                </li>
+            </ul>
+            <h6 class="">Unlimited Color</h6>
+            <ul class="layout-grid unlimited-color-layout"> <input id="ColorPicker1" type="color" value="#7366ff" name="Background"> <input id="ColorPicker2" type="color" value="#f73164" name="Background"> <button type="button" class="color-apply-btn btn btn-primary color-apply-btn">Apply</button></ul>
+            <h6>Light layout</h6>
+            <ul class="layout-grid customizer-color">
+                <li class="color-layout" data-attr="color-1" data-primary="#7366ff" data-secondary="#f73164">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-2" data-primary="#4831D4" data-secondary="#ea2087">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-3" data-primary="#d64dcf" data-secondary="#8e24aa">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-4" data-primary="#4c2fbf" data-secondary="#2e9de4">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-5" data-primary="#7c4dff" data-secondary="#7b1fa2">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-6" data-primary="#3949ab" data-secondary="#4fc3f7">
+                    <div></div>
+                </li>
+            </ul>
+            <h6 class="">Dark Layout</h6>
+            <ul class="layout-grid customizer-color dark">
+                <li class="color-layout" data-attr="color-1" data-primary="#4466f2" data-secondary="#1ea6ec">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-2" data-primary="#4831D4" data-secondary="#ea2087">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-3" data-primary="#d64dcf" data-secondary="#8e24aa">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-4" data-primary="#4c2fbf" data-secondary="#2e9de4">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-5" data-primary="#7c4dff" data-secondary="#7b1fa2">
+                    <div></div>
+                </li>
+                <li class="color-layout" data-attr="color-6" data-primary="#3949ab" data-secondary="#4fc3f7">
+                    <div></div>
+                </li>
+            </ul>
+            <h6 class="">Mix Layout</h6>
+            <ul class="layout-grid customizer-mix">
+                <li class="color-layout active" data-attr="light-only">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-light sidebar"></li>
+                            <li class="bg-light body"></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="color-layout" data-attr="dark-sidebar">
+                    <div class="header bg-light">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-dark sidebar"></li>
+                            <li class="bg-light body"></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="color-layout" data-attr="dark-only">
+                    <div class="header bg-dark">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li class="bg-dark sidebar"></li>
+                            <li class="bg-dark body"></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+`).appendTo($('body'));
+(function () {})();
+//live customizer js
+$(document).ready(function () {
+
+    $(".customizer-color li").on('click', function () {
+        $(".customizer-color li").removeClass('active');
+        $(this).addClass("active");
+        var color = $(this).attr("data-attr");
+        var primary = $(this).attr("data-primary");
+        var secondary = $(this).attr("data-secondary");
+        localStorage.setItem("color", color);
+        localStorage.setItem("primary", primary);
+        localStorage.setItem("secondary", secondary);
+        localStorage.removeItem("dark");
+        $("#color").attr("href", "../assets/css/" + color + ".css");
+        $(".dark-only").removeClass('dark-only');
+        location.reload(true);
+    });
+
+    $(".customizer-color.dark li").on('click', function () {
+        $(".customizer-color.dark li").removeClass('active');
+        $(this).addClass("active");
+        $("body").attr("class", "dark-only");
+        localStorage.setItem("dark", "dark-only");
+    });
+
+
+
+    if (localStorage.getItem("primary") != null) {
+        document.documentElement.style.setProperty('--theme-deafult', localStorage.getItem("primary"));
+    }
+    if (localStorage.getItem("secondary") != null) {
+        document.documentElement.style.setProperty('--theme-secondary', localStorage.getItem("secondary"));
+    }
+    $("#c-pills-home-tab").click(function () {
+        $(".customizer-contain").toggleClass("open");
+        // $(".customizer-links").addClass("open");
+    });
+
+    $(".close-customizer-btn").on('click', function () {
+        $(".floated-customizer-panel").removeClass("active");
+    });
+
+    $(".customizer-contain .icon-close").on('click', function () {
+        $(".customizer-contain").removeClass("open");
+        $(".customizer-links").removeClass("open");
+    });
+
+    $(".color-apply-btn").click(function () {
+        location.reload(true);
+    });
+
+    var primary = document.getElementById("ColorPicker1").value;
+    document.getElementById("ColorPicker1").onchange = function () {
+        primary = this.value;
+        localStorage.setItem("primary", primary);
+        document.documentElement.style.setProperty('--theme-primary', primary);
+    };
+
+    var secondary = document.getElementById("ColorPicker2").value;
+    document.getElementById("ColorPicker2").onchange = function () {
+        secondary = this.value;
+        localStorage.setItem("secondary", secondary);
+        document.documentElement.style.setProperty('--theme-secondary', secondary);
+    };
+
+
+    $(".customizer-color.dark li").on('click', function () {
+        $(".customizer-color.dark li").removeClass('active');
+        $(this).addClass("active");
+        $("body").attr("class", "dark-only");
+        localStorage.setItem("dark", "dark-only");
+    });
+
+
+    $(".customizer-mix li").on('click', function () {
+        $(".customizer-mix li").removeClass('active');
+        $(this).addClass("active");
+        var mixLayout = $(this).attr("data-attr");
+        $("body").attr("class", mixLayout);
+    });
+
+
+    $('.sidebar-setting li').on('click', function () {
+        $(".sidebar-setting li").removeClass('active');
+        $(this).addClass("active");
+        var sidebar = $(this).attr("data-attr");
+        $(".sidebar-wrapper").attr("sidebar-layout", sidebar);
+    });
+
+    $('.sidebar-main-bg-setting li').on('click', function () {
+        $(".sidebar-main-bg-setting li").removeClass('active')
+        $(this).addClass("active")
+        var bg = $(this).attr("data-attr");
+        $(".sidebar-wrapper").attr("class", "sidebar-wrapper " + bg);
+    });
+
+    $('.sidebar-type li').on('click', function () {
+        // $(".sidebar-type li").removeClass('active');
+        var type = $(this).attr("data-attr");
+
+        var boxed = "";
+        if ($(".page-wrapper").hasClass("box-layout")) {
+            boxed = "box-layout";
+        }
+        switch (type) {
+            case 'compact-sidebar': {
+                $(".page-wrapper").attr("class", "page-wrapper compact-wrapper " + boxed);
+                $(".page-body-wrapper").attr("class", "page-body-wrapper sidebar-icon");
+                localStorage.setItem('page-wrapper', 'compact-wrapper');
+                localStorage.setItem('page-body-wrapper', 'sidebar-icon');
+                break;
+            }
+            case 'normal-sidebar': {
+                $(".page-wrapper").attr("class", "page-wrapper horizontal-wrapper " + boxed);
+                $(".page-body-wrapper").attr("class", "page-body-wrapper horizontal-menu");
+                $(".logo-wrapper").find('img').attr('src', '../assets/images/logo/logo.png');
+                localStorage.setItem('page-wrapper', 'horizontal-wrapper');
+                localStorage.setItem('page-body-wrapper', 'horizontal-menu');
+                break;
+            }
+            default: {
+                $(".page-wrapper").attr("class", "page-wrapper compact-wrapper " + boxed);
+                $(".page-body-wrapper").attr("class", "page-body-wrapper sidebar-icon");
+                // $(".logo-wrapper").find('img').attr('src', '../assets/images/logo/compact-logo.png');
+                localStorage.setItem('page-wrapper', 'compact-wrapper');
+                localStorage.setItem('page-body-wrapper', 'sidebar-icon');
+                break;
+            }
+        }
+        // $(this).addClass("active");
+        location.reload(true);
+    });
+
+    $('.main-layout li').on('click', function () {
+        $(".main-layout li").removeClass('active');
+        $(this).addClass("active");
+        var layout = $(this).attr("data-attr");
+        $("body").attr("class", layout);
+        $("html").attr("dir", layout);
+    });
+
+    $('.main-layout .box-layout').on('click', function () {
+        $(".main-layout .box-layout").removeClass('active');
+        $(this).addClass("active");
+        var layout = $(this).attr("data-attr");
+        $("body").attr("class", "box-layout");
+        $("html").attr("dir", layout);
+    });
+
+});

@@ -79,46 +79,95 @@
                 @yield('content')
             </div>
         </div>
-        <!-- latest jquery-->
-        <script src="https://appt.demoo.id/tema/cuba/html/assets/js/jquery-3.5.1.min.js"></script>
+    </div>
 
-        <!-- Bootstrap js-->
-        <script src="https://appt.demoo.id/tema/cuba/html/assets/js/bootstrap/popper.min.js"></script>
-        <script src="https://appt.demoo.id/tema/cuba/html/assets/js/bootstrap/bootstrap.js"></script>
+    <!-- latest jquery-->
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/jquery-3.5.1.min.js"></script>
 
-        <!-- Axios -->
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Bootstrap js-->
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/bootstrap/popper.min.js"></script>
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/bootstrap/bootstrap.js"></script>
 
-        <!-- feather icon js-->
-        <script src="https://appt.demoo.id/tema/cuba/html/assets/js/icons/feather-icon/feather.min.js"></script>
-        <script src="https://appt.demoo.id/tema/cuba/html/assets/js/icons/feather-icon/feather-icon.js"></script>
-        <!-- Sidebar jquery-->
-        <script src="https://appt.demoo.id/tema/cuba/html/assets/js/config.js"></script>
-        <!-- Plugins JS start-->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://appt.demoo.id/tema/cuba/html/assets/js/form-validation-custom.js"></script>
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-        <!-- Plugins JS Ends-->
-        <!-- Theme js-->
-        <script src="{{ asset('assets/auth/js/app.js') }}"></script>
-        <!-- login js-->
-        <script>
-            $(document).ready(function() {
-                $('.preloader-container').fadeOut(500)
+    <!-- feather icon js-->
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/config.js"></script>
+    <!-- Plugins JS start-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://appt.demoo.id/tema/cuba/html/assets/js/form-validation-custom.js"></script>
 
-                let width = $('.g-recaptcha').parent().width();
-                if (width < 302) {
-                    let scale = width / 302;
-                    $('.g-recaptcha').css('transform', 'scale(' + scale + ')');
-                    $('.g-recaptcha').css('-webkit-transform', 'scale(' + scale + ')');
-                    $('.g-recaptcha').css('transform-origin', '0 0');
-                    $('.g-recaptcha').css('-webkit-transform-origin', '0 0');
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    <script src="{{ asset('assets/auth/js/app.js') }}"></script>
+    <!-- login js-->
+    <script>
+        let loading;
+
+        /**
+         * Keperluan disable inspect element
+         */
+        // ================================================== //
+
+        // Disable right click
+        $(document).contextmenu(function(event) {
+            event.preventDefault()
+        })
+
+        $(document).keydown(function(event) {
+            // Disable F12
+            if (event.keyCode == 123) return false;
+
+            // Disable Ctrl + Shift + I
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 'I'.charCodeAt(0)) {
+                return false;
+            }
+
+            // Disable Ctrl + Shift + J
+            if (event.ctrlKey && event.shiftKey && event.keyCode == 'J'.charCodeAt(0)) {
+                return false;
+            }
+
+            // Disable Ctrl + U
+            if (event.ctrlKey && event.keyCode == 'U'.charCodeAt(0)) {
+                return false;
+            }
+        })
+
+        /**
+         * Keperluan show loading
+         */
+        // ================================================== //
+        loading = () => {
+            Swal.fire({
+                title: 'Loading...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
                 }
             })
-        </script>
+        }
 
-        @stack('scripts')
-    </div>
+        $(document).ready(function() {
+            $('.preloader-container').fadeOut(500)
+
+            let width = $('.g-recaptcha').parent().width();
+            if (width < 302) {
+                let scale = width / 302;
+                $('.g-recaptcha').css('transform', 'scale(' + scale + ')');
+                $('.g-recaptcha').css('-webkit-transform', 'scale(' + scale + ')');
+                $('.g-recaptcha').css('transform-origin', '0 0');
+                $('.g-recaptcha').css('-webkit-transform-origin', '0 0');
+            }
+        })
+    </script>
+
+    @stack('scripts')
 </body>
 
 </html>

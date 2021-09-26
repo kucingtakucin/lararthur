@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('frontend.home.index');
 Route::prefix('pengaduan')->group(function () {
     Route::get('/', 'PengaduanController@index')->name('frontend.home.pengaduan.index');
-    Route::get('/insert', 'PengaduanController@insert')->name('front.home.pengaduan.insert');
+    Route::post('/insert', 'PengaduanController@insert')->name('frontend.home.pengaduan.insert');
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
