@@ -11,44 +11,35 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!--  Meta description, keywords, author -->
-    <meta name="description"
-        content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords"
-        content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description" content="Laravel 7 Boilerplate">
+    <meta name="keywords" content="laravel, php, boilerplate, rumahan, web app">
     <meta name="author" content="pixelstrap">
 
     <!-- Icon -->
-    <link rel="shortcut icon"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/favicon.png">
+    <link rel="shortcut icon" href="{{ asset('assets/templates/snowlake/style/images/favicon.png') }}">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Google re-Captcha  -->
-    {!! NoCaptcha::renderJs() !!}
-
     <!-- Stylesheets Plugin -->
     <link rel="stylesheet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/css/bootstrap.min.css">
+        href="{{ asset('assets/templates/snowlake/style/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/templates/snowlake/style/css/plugins.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/css/plugins.css">
+        href="{{ asset('assets/templates/snowlake/style/revolution/css/settings.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/css/settings.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/css/layers.css">
+        href="{{ asset('assets/templates/snowlake/style/revolution/css/layers.css') }}">
     <link rel="styleslaeet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/css/navigation.css">
+        href="{{ asset('assets/templates/snowlake/style/revolution/css/navigation.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/templates/snowlake/style/type/type.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/templates/snowlake/style.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/type/type.css">
-    <link rel="stylesheet" type="text/css" href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/css/color/purple.css">
+        href="{{ asset('assets/templates/snowlake/style/css/color/purple.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,300i,400,400i,600,600i,700,700i&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-        href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/css/font/font2.css">
-    <link rel="stylesheet" href="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/templates/snowlake/style/css/font/font2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/templates/snowlake/style.css') }}">
 
     <!-- Custom Stylesheets -->
     <link href="{{ asset('assets/frontend/css/app.css') }}" rel="stylesheet">
@@ -70,9 +61,10 @@
                 <div class="navbar-brand">
                     <a href="{{ route('frontend.home.index') }}">
                         <img src="#"
-                            srcset="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo.png 1x, https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo@2x.png 2x"
-                            class="logo-dark" alt="" /><img src="#"
-                            srcset="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light.png 1x, https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light@2x.png 2x"
+                            srcset="{{ asset('assets/templates/snowlake/style/images/logo.png') }} 1x, {{ asset('assets/templates/snowlake/style/images/logo@2x.png') }} 2x"
+                            class="logo-dark" alt="" />
+                        <img src="#"
+                            srcset="{{ asset('assets/templates/snowlake/style/images/logo-light.png') }} 1x, {{ asset('assets/templates/snowlake/style/images/logo-light@2x.png') }} 2x"
                             class="logo-light" alt="" />
                     </a>
                 </div>
@@ -108,7 +100,7 @@
                 <div class="navbar-collapse offcanvas-nav">
                     <div class="offcanvas-header d-lg-none d-xl-none">
                         <a href="{{ route('frontend.home.index') }}"><img src="#"
-                                srcset="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light.png 1x, https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light@2x.png 2x"
+                                srcset="{{ asset('assets/templates/snowlake/style/images/logo-light.png') }} 1x, {{ asset('assets/templates/snowlake/style/images/logo-light@2x.png') }} 2x"
                                 alt="" /></a>
                         <button class="plain offcanvas-close offcanvas-nav-close"><i
                                 class="jam jam-close"></i></button>
@@ -127,7 +119,7 @@
         <div class="offcanvas-info inverse-text">
             <button class="plain offcanvas-close offcanvas-info-close"><i class="jam jam-close"></i></button>
             <a href="{{ route('frontend.home.index') }}"><img src="#"
-                    srcset="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light.png 1x, https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/images/logo-light@2x.png 2x"
+                    srcset="{{ asset('assets/templates/snowlake/style/images/logo-light.png') }} 1x, {{ asset('style/images/logo-light@2x.png') }} 2x"
                     alt="" /></a>
             <div class="space30"></div>
             <p>Snowlake is a multi-concept and powerful site template contains rich layouts with possibility of
@@ -179,41 +171,39 @@
     <!-- /.content-wrapper -->
 
     <!-- Javascripts Plugin -->
-    <script src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/js/jquery.min.js"></script>
-    <script src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/js/popper.min.js"></script>
-    <script src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/js/bootstrap.min.js"></script>
-    <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/jquery.themepunch.tools.min.js">
+    <script src="{{ asset('assets/templates/snowlake/style/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/templates/snowlake/style/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/templates/snowlake/style/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/templates/snowlake/style/revolution/js/jquery.themepunch.tools.min.js') }}">
+    </script>
+    <script src="{{ asset('assets/templates/snowlake/style/revolution/js/jquery.themepunch.revolution.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/jquery.themepunch.revolution.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.actions.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.actions.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.carousel.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.carousel.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.kenburn.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.kenburn.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.layeranimation.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.layeranimation.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.migration.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.migration.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.navigation.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.navigation.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.parallax.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.parallax.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.slideanims.min.js') }}">
     </script>
     <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.slideanims.min.js">
-    </script>
-    <script
-        src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/revolution/js/extensions/revolution.extension.video.min.js">
+        src="{{ asset('assets/templates/snowlake/style/revolution/js/extensions/revolution.extension.video.min.js') }}">
     </script>
 
     <!-- Pusher -->
@@ -231,8 +221,8 @@
     <!-- Bootstrap Custom File Input -->
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 
-    <script src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/js/plugins.js"></script>
-    <script src="https://appt.demoo.id/tema/snowlake/snowlake-html/snowlake/style/js/scripts.js"></script>
+    <script src="{{ asset('assets/templates/snowlake/style/js/plugins.js') }}"></script>
+    <script src="{{ asset('assets/templates/snowlake/style/js/scripts.js') }}"></script>
 
     <!-- Custom Javascripts -->
     <script src="{{ asset('assets/frontend/js/app.js') }}" defer></script>

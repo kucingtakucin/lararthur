@@ -42,8 +42,6 @@
     <!-- Feather icon-->
     <link rel="stylesheet" type="text/css"
         href="https://appt.demoo.id/tema/cuba/html/assets/css/vendors/feather-icon.css">
-    <!-- Plugins css start-->
-    <!-- Plugins css Ends-->
 
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="https://appt.demoo.id/tema/cuba/html/assets/css/vendors/bootstrap.css">
